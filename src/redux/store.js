@@ -1,11 +1,18 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { postsReducer } from './postesSlice';
-import { reportsReducer } from './reportsSlice';
-
+import { configureStore } from "@reduxjs/toolkit";
+import { reportsReducer } from "./reportsSlice";
+import { tasksReducer } from "./tasksSlice";
+import { suggestionsReducer } from "./suggestionsSlice";
+import { complaintsReducer } from "./complaintsSlice";
+import { obstaclesReducer } from "./obstaclesSlice";
+import { outOfHoursWorkReducer } from "./outOfHoursWorkSlice";
 
 export const store = configureStore({
-    reducer: {
-       posts: postsReducer,
-       reports: reportsReducer
-    },
+  reducer: {
+    reports: reportsReducer,
+    tasks: tasksReducer,
+    suggestions: suggestionsReducer,
+    complaints: complaintsReducer,
+    obstacles: obstaclesReducer,
+    outOfHoursWork: outOfHoursWorkReducer,
+  },
 });

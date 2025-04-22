@@ -3,6 +3,7 @@ import ReportCard from "../components/ReportCard";
 import Heading from "../components/Utils/Heading";
 import GetAllReportsHook from "../hook/get-all-reports-hook";
 import Loader from "../components/Utils/Loader";
+import AddReportButton from "../components/AddReportButton";
 
 const AllReportPage = () => {
   const [data, isLoading] = GetAllReportsHook();
@@ -10,6 +11,7 @@ const AllReportPage = () => {
   return (
     <div className="p-4">
       <Heading title="قائمة التقارير" subtitle="قائمة التقارير" />
+      <AddReportButton/>
       {isLoading ? (
         <Loader />
       ) : (

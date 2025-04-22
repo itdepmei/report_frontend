@@ -4,11 +4,21 @@ import urLogo from "../assets/urlogo.png";
 import GetAllReportsHook from "../hook/get-all-reports-hook";
 import { useParams } from "react-router-dom";
 import GetOneReportHook from "../hook/get-one_report-hook";
+import GetTasksFromReportHook from "../hook/get-tasks-from-report-hook";
+import formatDate from "../hook/UtilsFunctions/FormatDate";
+import GetAllSuggestionsHook from "../hook/get-all-suggestions-hook";
+import GetAllComplaintsHook from "../hook/get-all-complaints-hook";
+import GetAllObstaclesHook from "../hook/get-all-obstacles-hook";
+import GetAllOutOfHoursWorkHook from "../hook/get-all-outOfHoursWork-hook";
 
 const Report = () => {
   const { id } = useParams();
-  const [singleReport, isLoading] = GetOneReportHook(id);
- 
+  const [singleReport] = GetOneReportHook(id);
+  const [task] = GetTasksFromReportHook(id);
+  const [suggestion] = GetAllSuggestionsHook(id);
+  const [complaint] = GetAllComplaintsHook(id);
+  const [obstacle] = GetAllObstaclesHook(id);
+  const [outOfHoursWork] = GetAllOutOfHoursWorkHook(id);
 
   return (
     <div
@@ -29,7 +39,9 @@ const Report = () => {
       <div className="w-full  mx-2 flex-grow flex flex-col items-center justify-center font-bold mt-[150px]">
         <h6 className="text-3xl">شركة هندسة المارج للصناعات الالكترونية </h6>
         <h6 className="text-3xl ">استمارة التقرير اليومي</h6>
-        <h6 className="text-3xl mt-4">{singleReport.date} يوم الاحد </h6>
+        <h6 className="text-3xl mt-4">
+          يوم الاحد {formatDate(singleReport.date)}{" "}
+        </h6>
       </div>
 
       {/* table */}
@@ -52,44 +64,90 @@ const Report = () => {
 
           {/* Body */}
           <tbody>
-            <tr className="grid grid-cols-9">
-              <td className="border border-black p-1 text-xs text-center break-words h-10"></td>
-              <td className="col-span-4 border border-black p-1 text-xs text-center break-words h-10"></td>
-              <td className="col-span-2 border border-black p-1 text-xs text-center break-words h-10"></td>
-              <td className="col-span-2 border border-black p-1 text-xs text-center break-words h-10"></td>
-            </tr>
+            {task && task.length > 0 ? (
+              task.map((task, index) => (
+                <tr key={index} className="grid grid-cols-9">
+                  <td className="border border-black p-1 text-xs text-center break-words h-10">
+                    {index + 1}
+                  </td>
+                  <td className="col-span-4 border border-black p-1 text-md text-right break-words h-10">
+                    {task.title}
+                  </td>
+                  <td className="col-span-2 border border-black p-1 text-md text-center break-words h-10">
+                    {task.timeStart} - {task.timeEnd}
+                  </td>
+                  <td className="col-span-2 border border-black p-1 text-md text-right break-words h-10">
+                    {task.note}
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr className="grid grid-cols-9">
+                <td className="border border-black p-1 text-xs text-center break-words h-10"></td>
+                <td className="col-span-4 border border-black p-1 text-md text-right break-words h-10"></td>
+                <td className="col-span-2 border border-black p-1 text-md text-center break-words h-10"></td>
+                <td className="col-span-2 border border-black p-1 text-md text-right break-words h-10"></td>
+              </tr>
+            )}
 
             <tr className="grid grid-cols-9">
-              <td className="border border-black p-1 text-xs text-center break-words h-10"></td>
+              <td className="border border-black p-1 text-xs text-center break-words h-10">
+                {task.length + 1}
+              </td>
               <td className="col-span-4 border border-black p-1 text-md text-right break-words h-10 font-bold">
                 المقترحات التي تخص العمل
               </td>
-              <td className="col-span-2 border border-black p-1 text-md text-right break-words h-10"></td>
-              <td className="col-span-2 border border-black p-1 text-md text-right break-words h-10"></td>
+              <td className="col-span-2 border border-black p-1 text-md text-center break-words h-10">
+                لا يوجد
+              </td>
+              <td className="col-span-2 border border-black p-1 text-md text-right break-words h-10">
+                {suggestion[0]?.note}
+              </td>
             </tr>
             <tr className="grid grid-cols-9">
-              <td className="border border-black p-1 text-xs text-center break-words h-10"></td>
+              <td className="border border-black p-1 text-xs text-center break-words h-10">
+                {task.length + 2}
+              </td>
               <td className="col-span-4 border border-black p-1 text-md text-right break-words h-10 font-bold">
                 الشكاوى
               </td>
-              <td className="col-span-2 border border-black p-1 text-md text-right break-words h-10"></td>
-              <td className="col-span-2 border border-black p-1 text-md text-right break-words h-10"></td>
+              <td className="col-span-2 border border-black p-1 text-md text-center break-words h-10">
+                لا يوجد
+              </td>
+              <td className="col-span-2 border border-black p-1 text-md text-right break-words h-10">
+                {complaint[0]?.note}
+              </td>
             </tr>
             <tr className="grid grid-cols-9">
-              <td className="border border-black p-1 text-xs text-center break-words h-10"></td>
+              <td className="border border-black p-1 text-xs text-center break-words h-10">
+                {task.length + 3}
+              </td>
               <td className="col-span-4 border border-black p-1 text-md text-right break-words h-10 font-bold">
                 المعوقات
               </td>
-              <td className="col-span-2 border border-black p-1 text-md text-right break-words h-10"></td>
-              <td className="col-span-2 border border-black p-1 text-md text-right break-words h-10"></td>
+              <td className="col-span-2 border border-black p-1 text-md text-center break-words h-10">
+                لا يوجد
+              </td>
+              <td className="col-span-2 border border-black p-1 text-md text-right break-words h-10">
+                {obstacle[0]?.note}
+              </td>
             </tr>
             <tr className="grid grid-cols-9">
-              <td className="border border-black p-1 text-xs text-center break-words h-10"></td>
+              <td className="border border-black p-1 text-xs text-center break-words h-10">
+                {task.length + 4}
+              </td>
               <td className="col-span-4 border border-black p-1 text-md text-right break-words h-10 font-bold">
                 اعمال منفذة خارج أوقات الدوام الرسمي
               </td>
-              <td className="col-span-2 border border-black p-1 text-md text-right break-words h-10"></td>
-              <td className="col-span-2 border border-black p-1 text-md text-right break-words h-10"></td>
+              <td className="col-span-2 border border-black p-1 text-md text-center break-words h-10">
+                {outOfHoursWork[0]?.timeStart && outOfHoursWork[0]?.timeEnd
+                  ? `${outOfHoursWork[0].timeStart} - ${outOfHoursWork[0].timeEnd}`
+                  : "لا يوجد"}
+              </td>
+
+              <td className="col-span-2 border border-black p-1 text-md text-right break-words h-10">
+                {outOfHoursWork[0]?.note}
+              </td>
             </tr>
           </tbody>
         </table>

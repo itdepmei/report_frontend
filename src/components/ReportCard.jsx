@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Eye, FileText } from "lucide-react";
 import ActionButtons from "./Utils/ActionButtons";
+import formatDate from "../hook/UtilsFunctions/FormatDate";
 
 const ReportCard = ({ id, name, date }) => {
   const handleDelete = (e) => {
@@ -28,7 +29,7 @@ const ReportCard = ({ id, name, date }) => {
           </div>
 
           <h2 className="text-xl font-extrabold text-blue-900 mb-2">{name}</h2>
-          <p className="text-blue-500 text-sm font-medium mb-6">{date}</p>
+          <p className="text-blue-500 text-sm font-medium mb-6">{formatDate(date)}</p>
 
           <div className="flex justify-center">
             <Link
