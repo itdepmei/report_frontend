@@ -41,7 +41,7 @@ const Report = () => {
         <h6 className="text-3xl">شركة هندسة المارج للصناعات الالكترونية </h6>
         <h6 className="text-3xl ">استمارة التقرير اليومي</h6>
         <h6 className="text-3xl mt-4">
-          يوم الاحد {formatDate(singleReport?.date || "")}
+           {formatDate(singleReport?.date || "")}
         </h6>
       </div>
 
