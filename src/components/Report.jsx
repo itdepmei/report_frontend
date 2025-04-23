@@ -85,11 +85,11 @@ const Report = () => {
                   </td>
                   <td className="col-span-2 border border-black p-1 flex justify-center items-center h-10">
                     <div className="flex gap-2">
-                      <button className="p-2 text-rose-600 " aria-label="حذف">
+                      <button className="p-2 text-rose-600 hover:text-rose-800 " aria-label="حذف">
                         <Trash2 className="w-5 h-5" />
                       </button>
                       <button
-                        className="p-2 text-emerald-600 "
+                        className="p-2 text-emerald-600 hover:text-emerald-800"
                         aria-label="تعديل"
                       >
                         <Pencil className="w-5 h-5" />
@@ -123,10 +123,10 @@ const Report = () => {
               </td>
               <td className="col-span-2 border border-black p-1 flex justify-center items-center h-10">
                 <div className="flex gap-2">
-                  <button className="p-2 text-rose-600 " aria-label="حذف">
+                  <button className="p-2 text-rose-600 hover:text-rose-800 " aria-label="حذف">
                     <Trash2 className="w-5 h-5" />
                   </button>
-                  <button className="p-2 text-emerald-600 " aria-label="تعديل">
+                  <button className="p-2 text-emerald-600 hover:text-emerald-800" aria-label="تعديل">
                     <Pencil className="w-5 h-5" />
                   </button>
                 </div>
@@ -147,10 +147,10 @@ const Report = () => {
               </td>
               <td className="col-span-2 border border-black p-1 flex justify-center items-center h-10">
                 <div className="flex gap-2">
-                  <button className="p-2 text-rose-600 " aria-label="حذف">
+                  <button className="p-2 text-rose-600 hover:text-rose-800" aria-label="حذف">
                     <Trash2 className="w-5 h-5" />
                   </button>
-                  <button className="p-2 text-emerald-600 " aria-label="تعديل">
+                  <button className="p-2 text-emerald-600 hover:text-emerald-800" aria-label="تعديل">
                     <Pencil className="w-5 h-5" />
                   </button>
                 </div>
@@ -171,10 +171,10 @@ const Report = () => {
               </td>
               <td className="col-span-2 border border-black p-1 flex justify-center items-center h-10">
                 <div className="flex gap-2">
-                  <button className="p-2 text-rose-600 " aria-label="حذف">
+                  <button className="p-2 text-rose-600 hover:text-rose-800" aria-label="حذف">
                     <Trash2 className="w-5 h-5" />
                   </button>
-                  <button className="p-2 text-emerald-600 " aria-label="تعديل">
+                  <button className="p-2 text-emerald-600 hover:text-emerald-800" aria-label="تعديل">
                     <Pencil className="w-5 h-5" />
                   </button>
                 </div>
@@ -199,10 +199,10 @@ const Report = () => {
               </td>
               <td className="col-span-2 border border-black p-1 flex justify-center items-center h-10">
                 <div className="flex gap-2">
-                  <button className="p-2 text-rose-600 " aria-label="حذف">
+                  <button className="p-2 text-rose-600 hover:text-rose-800" aria-label="حذف">
                     <Trash2 className="w-5 h-5" />
                   </button>
-                  <button className="p-2 text-emerald-600 " aria-label="تعديل">
+                  <button className="p-2 text-emerald-600 hover:text-emerald-800" aria-label="تعديل">
                     <Pencil className="w-5 h-5" />
                   </button>
                 </div>
