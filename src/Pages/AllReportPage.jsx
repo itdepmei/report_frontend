@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ReportCard from "../components/ReportCard";
 import Heading from "../components/Utils/Heading";
 import GetAllReportsHook from "../hook/get-all-reports-hook";
@@ -9,19 +9,21 @@ const AllReportPage = () => {
   const [data, isLoading] = GetAllReportsHook();
 
   return (
-    <div className="p-4">
-      <Heading title="قائمة التقارير" subtitle="قائمة التقارير" />
-      <AddReportButton/>
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <div dir="rtl" className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {data &&
-            data.map((report) => (
-              <ReportCard id={report._id} name="تقرير" date={report.date} />
-            ))}
-        </div>
-      )}
+    <div>
+      <div className="p-4">
+        <Heading title="قائمة التقارير" subtitle="قائمة التقارير" />
+        <AddReportButton />
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <div dir="rtl" className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {data &&
+              data.map((report) => (
+                <ReportCard id={report._id} name="تقرير" date={report.date} />
+              ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

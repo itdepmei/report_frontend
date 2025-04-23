@@ -1,13 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { useGetData } from "../hooks/useGetData";
-import { useInsertData } from "../hooks/useInsertData"; // تأكد من وجود هذا الهوك
+import { useInsertData } from "../hooks/useInsertData";
+import { useDeleteData } from "../hooks/useDeleteData"; // ✅ استيراد هوك الحذف
 
 const initialState = {
   data: [],
   isLoading: false,
   error: null,
   singleReport: [],
-  createdReport: null, // لتخزين التقرير المضاف
+  createdReport: null,
 };
 
 // Get all reports
@@ -29,6 +30,21 @@ export const createReport = createAsyncThunk(
     try {
       const { data } = await useInsertData("/api/v1/reports", reportData);
       return data.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || error.message
+      );
+    }
+  }
+);
+
+// ✅ Delete report
+export const deleteReport = createAsyncThunk(
+  "reports/delete",
+  async (id, thunkAPI) => {
+    try {
+      await useDeleteData(`/api/v1/reports/${id}`);
+      return id; // نعيد الـ ID لاستخدامه في الحذف من الـ state
     } catch (error) {
       return thunkAPI.rejectWithValue(
         error.response?.data?.message || error.message
@@ -77,9 +93,23 @@ const ReportSlice = createSlice({
       .addCase(createReport.fulfilled, (state, action) => {
         state.isLoading = false;
         state.createdReport = action.payload;
-        state.data.push(action.payload); 
+        state.data.push(action.payload);
       })
       .addCase(createReport.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+
+      // Delete report
+      .addCase(deleteReport.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(deleteReport.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.data = state.data.filter((report) => report._id !== action.payload);
+      })
+      .addCase(deleteReport.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });

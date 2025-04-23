@@ -9,7 +9,7 @@ const AddReportButton = () => {
   
     const handleAddReport = () => {
         const newReport = {
-          date: new Date().toISOString()
+          date: new Date().toISOString("ar-EG")
         };
       
         dispatch(createReport(newReport));

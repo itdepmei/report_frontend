@@ -1,4 +1,5 @@
 import { Trash2, Pencil } from "lucide-react";
+import DeleteModel from "../model/DeleteModel";
 
 const ActionButtons = ({ onDelete, onEdit }) => {
   return (
