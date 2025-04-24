@@ -13,6 +13,11 @@ const useInsertDataWithImage = async (url, parmas) => {
 }
 
 const useInsertData = async (url, parmas) => {
+    const res = await baseUrl.post(url, parmas);
+    return res;
+  };
+
+const useInsertDataWithToken = async (url, parmas) => {
     const config = {
         headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`
@@ -23,4 +28,4 @@ const useInsertData = async (url, parmas) => {
     return res;
 }
 
-export { useInsertData, useInsertDataWithImage };
+export { useInsertData, useInsertDataWithImage, useInsertDataWithToken };
