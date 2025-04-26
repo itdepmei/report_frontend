@@ -1,11 +1,21 @@
 import React from "react";
 import { FaUserAlt, FaLock, FaSignInAlt } from "react-icons/fa";
 import urLogo from "../../assets/urlogo.png";
+import LoginHook from "../../hook/auth/login-hook";
 
 const Login = () => {
+  const [
+    email,
+    password,
+    loading,
+    onChangEmail,
+    onChangePassword,
+    onSubmit,
+  ] = LoginHook();
+
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      console.log("Enter key pressed");
+      onSubmit();
     }
   };
 
@@ -20,9 +30,6 @@ const Login = () => {
         <h2 className="text-3xl font-bold text-indigo-600 my-6 text-center">
           تسجيل الدخول
         </h2>
-        {/* <p className="text-2xl font-bold text-gray-500 mb-6 text-center">
-          وزراة الداخلية
-        </p> */}
 
         <div className="grid grid-cols-1 gap-6">
           {/* Username Field */}
@@ -36,6 +43,8 @@ const Login = () => {
             <div className="relative">
               <input
                 type="text"
+                value={email}
+                onChange={onChangEmail}
                 onKeyDown={handleKeyDown}
                 className="w-full px-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none transition text-lg text-left"
                 dir="ltr"
@@ -56,6 +65,8 @@ const Login = () => {
             <div className="relative">
               <input
                 type="password"
+                value={password}
+                onChange={onChangePassword}
                 onKeyDown={handleKeyDown}
                 className="w-full px-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none transition text-lg text-left"
                 dir="ltr"
@@ -67,9 +78,13 @@ const Login = () => {
         </div>
 
         {/* Login Button */}
-        <button className="w-full bg-gradient-to-r from-blue-500 to-indigo-500 text-white py-4 px-6 rounded-lg font-medium text-lg hover:shadow-lg hover:from-blue-600 hover:to-indigo-600 transition mt-6 flex items-center justify-center gap-2">
+        <button
+          onClick={onSubmit}
+          disabled={loading}
+          className="w-full bg-gradient-to-r from-blue-500 to-indigo-500 text-white py-4 px-6 rounded-lg font-medium text-lg hover:shadow-lg hover:from-blue-600 hover:to-indigo-600 transition mt-6 flex items-center justify-center gap-2 disabled:opacity-50"
+        >
           <FaSignInAlt className="text-2xl" />
-          تسجيل الدخول
+          {loading ? "جاري الدخول..." : "تسجيل الدخول"}
         </button>
 
         <div className="text-gray-600 text-sm text-center mt-8">

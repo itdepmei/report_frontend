@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { addTask } from "../redux/tasksSlice";
+import { addTask, updateTask } from "../redux/tasksSlice";
 import { useDispatch } from "react-redux";
 const AddTaskHook = (reportId) => {
   const dispatch = useDispatch();
@@ -37,6 +37,19 @@ const AddTaskHook = (reportId) => {
     dispatch(addTask({ reportId, taskData: newTask }));
 };
 
+
+const handleUpdateTask = () => {
+  const newTask = {
+    title: taskTitle,
+      timeStart: timeStart,
+      timeEnd: timeEnd,
+      note: note,
+      report: reportId, 
+  };
+
+  dispatch(updateTask({ reportId, updatedData: newTask }));
+};
+
   return [
     taskTitle,
     timeStart,
@@ -47,6 +60,7 @@ const AddTaskHook = (reportId) => {
     handleTimeEndChange,
     handleNoteChange,
     handleAddTask,
+    handleUpdateTask
   ];
 };
 

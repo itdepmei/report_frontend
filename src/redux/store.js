@@ -5,6 +5,7 @@ import { suggestionsReducer } from "./suggestionsSlice";
 import { complaintsReducer } from "./complaintsSlice";
 import { obstaclesReducer } from "./obstaclesSlice";
 import { outOfHoursWorkReducer } from "./outOfHoursWorkSlice";
+import { authReducer } from "./authSlice";
 
 export const store = configureStore({
   reducer: {
@@ -14,5 +15,6 @@ export const store = configureStore({
     complaints: complaintsReducer,
     obstacles: obstaclesReducer,
     outOfHoursWork: outOfHoursWorkReducer,
+    auth:authReducer
   },
 });

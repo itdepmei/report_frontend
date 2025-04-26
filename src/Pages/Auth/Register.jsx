@@ -8,8 +8,26 @@ import {
   FaIdCard,
 } from "react-icons/fa";
 import urLogo from "../../assets/urlogo.png";
+import RegisterHook from "../../hook/auth/register-hook";
 
 const Register = () => {
+  const [
+    role,
+    name,
+    email,
+    phone,
+    password,
+    passwordConfirm,
+    loading,
+    onChangeName,
+    onChangeEmail,
+    onChangePhone,
+    onChangePassword,
+    onChangeConfirmPassword,
+    onChangeRole,
+    OnSubmit,
+  ] = RegisterHook();
+
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       console.log("Enter key pressed");
@@ -33,10 +51,10 @@ const Register = () => {
             className="w-[100px] h-[100px] object-contain"
           />
           <div className="mr-4 text-center md:text-right">
-            <h2 className="text-3xl font-bold text-indigo-600">|ستجيل حساب جديد</h2>
-            {/* <p className="text-xl font-bold text-gray-500">
-              وزراة الداخلية
-            </p> */}
+            <h2 className="text-3xl font-bold text-indigo-600">تسجيل حساب جديد</h2>
+            <p className="text-xl font-bold text-gray-500">
+              منتجات اور
+            </p>
           </div>
         </div>
 
@@ -48,39 +66,21 @@ const Register = () => {
             </h3>
           </div>
 
-          {/* First Name Field */}
-          <div>
-            <label htmlFor="firstName" className={labelClass}>
-              الاسم الاول
+          {/* Name Field */}
+          <div className="md:col-span-2">
+            <label htmlFor="name" className={labelClass}>
+              الاسم الكامل
             </label>
             <div className="relative">
               <input
-                id="firstName"
+                id="name"
                 type="text"
+                value={name}
+                onChange={onChangeName}
                 onKeyDown={handleKeyDown}
                 className={inputClass}
                 dir="rtl"
-                placeholder="الاسم الاول"
-              />
-              <div className={iconContainerClass}>
-                <FaUserAlt className={iconClass} />
-              </div>
-            </div>
-          </div>
-
-          {/* Last Name Field */}
-          <div>
-            <label htmlFor="lastName" className={labelClass}>
-              الاسم الاخير
-            </label>
-            <div className="relative">
-              <input
-                id="lastName"
-                type="text"
-                onKeyDown={handleKeyDown}
-                className={inputClass}
-                dir="rtl"
-                placeholder="الاسم الاخير"
+                placeholder="الاسم الكامل"
               />
               <div className={iconContainerClass}>
                 <FaUserAlt className={iconClass} />
@@ -94,7 +94,13 @@ const Register = () => {
               المنصب
             </label>
             <div className="relative">
-              <select id="role" className={inputClass} dir="rtl">
+              <select
+                id="role"
+                value={role}
+                onChange={onChangeRole}
+                className={inputClass}
+                dir="rtl"
+              >
                 <option value="user">مستخدم</option>
                 <option value="admin">مسؤول</option>
               </select>
@@ -120,6 +126,8 @@ const Register = () => {
               <input
                 id="email"
                 type="email"
+                value={email}
+                onChange={onChangeEmail}
                 onKeyDown={handleKeyDown}
                 className={inputClass}
                 dir="ltr"
@@ -140,6 +148,8 @@ const Register = () => {
               <input
                 id="phone"
                 type="tel"
+                value={phone}
+                onChange={onChangePhone}
                 onKeyDown={handleKeyDown}
                 className={inputClass}
                 dir="ltr"
@@ -158,26 +168,6 @@ const Register = () => {
             </h3>
           </div>
 
-          {/* Username Field */}
-          <div className="md:col-span-3">
-            <label htmlFor="username" className={labelClass}>
-              اسم المستخدم
-            </label>
-            <div className="relative">
-              <input
-                id="username"
-                type="text"
-                onKeyDown={handleKeyDown}
-                className={inputClass}
-                dir="ltr"
-                placeholder="اسم المستخدم"
-              />
-              <div className={iconContainerClass}>
-                <FaUserAlt className={iconClass} />
-              </div>
-            </div>
-          </div>
-
           {/* Password Field */}
           <div>
             <label htmlFor="password" className={labelClass}>
@@ -187,6 +177,8 @@ const Register = () => {
               <input
                 id="password"
                 type="password"
+                value={password}
+                onChange={onChangePassword}
                 onKeyDown={handleKeyDown}
                 className={inputClass}
                 dir="ltr"
@@ -207,6 +199,8 @@ const Register = () => {
               <input
                 id="confirmPassword"
                 type="password"
+                value={passwordConfirm}
+                onChange={onChangeConfirmPassword}
                 onKeyDown={handleKeyDown}
                 className={inputClass}
                 dir="ltr"
@@ -220,7 +214,10 @@ const Register = () => {
         </div>
 
         {/* Register Button */}
-        <button className="w-full bg-gradient-to-r from-blue-500 to-indigo-500 text-white py-4 px-6 rounded-lg font-medium text-lg hover:shadow-lg hover:from-blue-600 hover:to-indigo-600 transition mt-6 flex items-center justify-center gap-2">
+        <button
+          onClick={OnSubmit}
+          className="w-full bg-gradient-to-r from-blue-500 to-indigo-500 text-white py-4 px-6 rounded-lg font-medium text-lg hover:shadow-lg hover:from-blue-600 hover:to-indigo-600 transition mt-6 flex items-center justify-center gap-2"
+        >
           <FaSignInAlt className="text-xl" />
           تسجيل مستخدم
         </button>
