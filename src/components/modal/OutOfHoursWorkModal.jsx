@@ -1,25 +1,15 @@
 import React from "react";
+import AddOutOfHoursWorkHook from "../../hook/add-outOfHoursWork-hook";
 import { X, Calendar, Clock, AlignLeft, Check } from "lucide-react";
-import AddTaskHook from "../../hook/add-task-hook";
 
-const TasksModal = ({ onClose, id }) => {
-  const [
-    taskTitle,
-    timeStart,
-    timeEnd,
-    note,
-    handleTaskTitleChange,
-    handleTimeStartChange,
-    handleTimeEndChange,
-    handleNoteChange,
-    handleAddTask,
-  ] = AddTaskHook(id);
-
-  const handleSubmit = (e) => {
+const OutOfHoursWorkModal = ({ onClose, id }) => {
+  const [note,timeStart, timeEnd, handleTimeStartChange, handleTimeEndChange, handleNoteChange, handleAddOutOfHoursWork] =
+    AddOutOfHoursWorkHook(id);
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    handleAddTask();
+   await handleAddOutOfHoursWork();
+    onClose();
   };
-
   return (
     <div
       dir="rtl"
@@ -28,7 +18,8 @@ const TasksModal = ({ onClose, id }) => {
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-6 max-w-md w-full mx-4 transform transition-all duration-300 animate-fadeIn">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
-            إضافة مهمة جديدة
+          اعمال منفذة خارج أوقات الدوام الرسمي
+
           </h2>
           <button
             onClick={onClose}
@@ -39,23 +30,7 @@ const TasksModal = ({ onClose, id }) => {
         </div>
 
         <form className="space-y-5" onSubmit={handleSubmit}>
-          <div className="space-y-2">
-            <label className="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-              <Calendar size={16} className="ml-2 text-blue-500" />
-              <span>عنوان المهمة</span>
-            </label>
-            <input
-              type="text"
-              name="title"
-              value={taskTitle}
-              onChange={handleTaskTitleChange}
-              className="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors shadow-sm"
-              placeholder="أدخل عنوان المهمة"
-              dir="rtl"
-            />
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <label className="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 <Clock size={16} className="ml-2 text-blue-500" />
@@ -116,7 +91,7 @@ const TasksModal = ({ onClose, id }) => {
               className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 focus:ring-opacity-50 transition-colors flex items-center shadow-md"
             >
               <Check className="ml-2" size={18} />
-              حفظ المهمة
+              حفظ 
             </button>
           </div>
         </form>
@@ -125,4 +100,4 @@ const TasksModal = ({ onClose, id }) => {
   );
 };
 
-export default TasksModal;
+export default OutOfHoursWorkModal;

@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { useGetData } from "../hooks/useGetData";
-import { useDeleteData } from "../hooks/useDeleteData"; // تأكد من وجود هذا
+import { useDeleteData } from "../hooks/useDeleteData";
+import { useInsertData } from "../hooks/useInsertData";
 
 const initialState = {
   obstacle: [],
@@ -26,6 +27,15 @@ export const deleteObstacle = createAsyncThunk(
   }
 );
 
+// إضافة عائق
+export const addObstacle = createAsyncThunk(
+  "obstacles/create",
+  async ({ reportId, obstacleData }) => {
+    const { data } = await useInsertData(`/api/v1/reports/${reportId}/obstacles/`, obstacleData);
+    return data.data;
+  }
+);
+
 const obstaclesSlice = createSlice({
   name: "obstaclesSlice",
   initialState,
@@ -44,7 +54,7 @@ const obstaclesSlice = createSlice({
         state.error = action.error.message;
       })
 
-      // حالات الحذف
+      // حذف عائق
       .addCase(deleteObstacle.pending, (state) => {
         state.isLoading = true;
       })
@@ -55,6 +65,19 @@ const obstaclesSlice = createSlice({
         );
       })
       .addCase(deleteObstacle.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      })
+
+      // إضافة عائق
+      .addCase(addObstacle.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(addObstacle.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.obstacle.push(action.payload);
+      })
+      .addCase(addObstacle.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
       });

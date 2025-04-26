@@ -18,11 +18,22 @@ import { deleteComplaint } from "../redux/complaintsSlice";
 import { deleteObstacle } from "../redux/obstaclesSlice";
 import { deleteOutOfHoursWork } from "../redux/outOfHoursWorkSlice";
 import TasksModal from "./modal/TasksModal";
+import SuggestionsModal from "./modal/suggestionsModal";
+import ComplaintModal from "./modal/ComplaintModal";
+import ObstacleModal from "./modal/ObstacleModal";
+import OutOfHoursWorkModal from "./modal/OutOfHoursWorkModal";
+import ReportWord from "./ReportWord";
+import formatTime from "../hook/UtilsFunctions/FormatTime";
 
 const Report = () => {
   const dispatch = useDispatch();
 
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+  const [isSuggestionsModalOpen, setIsSuggestionsModalOpen] = useState(false);
+  const [isComplaintModalOpen, setIsComplaintModalOpen] = useState(false);
+  const [isObstacleModalOpen, setIsObstacleModalOpen] = useState(false);
+  const [isOutOfHoursWorkModalOpen, setIsOutOfHoursWorkModalOpen] =
+    useState(false);
 
   const { id } = useParams();
   const [refresh, setRefresh] = useState(false);
@@ -36,6 +47,22 @@ const Report = () => {
 
   const handleOpenTaskModal = () => {
     setIsTaskModalOpen(!isTaskModalOpen);
+  };
+
+  const handleOpenSuggestionsModal = () => {
+    setIsSuggestionsModalOpen(!isSuggestionsModalOpen);
+  };
+
+  const handleOpenComplaintModal = () => {
+    setIsComplaintModalOpen(!isComplaintModalOpen);
+  };
+
+  const handleOpenObstacleModal = () => {
+    setIsObstacleModalOpen(!isObstacleModalOpen);
+  };
+
+  const handleOpenOutOfHoursWorkModal = () => {
+    setIsOutOfHoursWorkModalOpen(!isOutOfHoursWorkModalOpen);
   };
 
   const handleDeleteTask = async (id) => {
@@ -87,16 +114,17 @@ const Report = () => {
             {formatDate(singleReport?.date || "")}
           </h6>
         </div>
+        <ReportWord id={id}/>
 
-         <div dir="rtl" className="p-4">
-              <button
-                onClick={handleOpenTaskModal}
-                className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-5 rounded-xl shadow-md transition-all duration-300 ease-in-out rtl"
-              >
-                <span className="text-md">إضافة مهمة</span>
-                <Plus size={22} />
-              </button>
-            </div>
+        <div dir="rtl" className="p-4">
+          <button
+            onClick={handleOpenTaskModal}
+            className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-5 rounded-xl shadow-md transition-all duration-300 ease-in-out rtl"
+          >
+            <span className="text-md">إضافة مهمة</span>
+            <Plus size={22} />
+          </button>
+        </div>
 
         {/* table */}
         <div className="m-6">
@@ -133,7 +161,7 @@ const Report = () => {
                       {taskItem.title}
                     </td>
                     <td className="col-span-2 border border-black p-1 text-md text-center break-words h-10">
-                      {taskItem.timeStart} - {taskItem.timeEnd}
+                      {formatTime(taskItem.timeStart)} - {formatTime(taskItem.timeEnd)}
                     </td>
                     <td className="col-span-2 border border-black p-1 text-md text-right break-words h-10">
                       {taskItem.note}
@@ -204,6 +232,7 @@ const Report = () => {
                       <button
                         className="p-2 text-blue-600 hover:text-blue-800"
                         aria-label="إضافة"
+                        onClick={handleOpenSuggestionsModal}
                       >
                         <Plus className="w-5 h-5" />
                       </button>
@@ -248,6 +277,7 @@ const Report = () => {
                       <button
                         className="p-2 text-blue-600 hover:text-blue-800"
                         aria-label="إضافة"
+                        onClick={handleOpenComplaintModal}
                       >
                         <Plus className="w-5 h-5" />
                       </button>
@@ -290,6 +320,7 @@ const Report = () => {
                       <button
                         className="p-2 text-blue-600 hover:text-blue-800"
                         aria-label="إضافة"
+                        onClick={handleOpenObstacleModal}
                       >
                         <Plus className="w-5 h-5" />
                       </button>
@@ -308,9 +339,7 @@ const Report = () => {
                   {outOfHoursWork &&
                   outOfHoursWork[0]?.timeStart &&
                   outOfHoursWork[0]?.timeEnd
-                    ? `${formatDate(
-                        outOfHoursWork[0].timeStart
-                      )} - ${formatDate(outOfHoursWork[0].timeEnd)}`
+                    ? `${outOfHoursWork[0].timeStart} - ${outOfHoursWork[0].timeEnd}`
                     : "لا يوجد"}
                 </td>
                 <td className="col-span-2 border border-black p-1 text-md text-right break-words h-10">
@@ -340,6 +369,7 @@ const Report = () => {
                       <button
                         className="p-2 text-blue-600 hover:text-blue-800"
                         aria-label="إضافة"
+                        onClick={handleOpenOutOfHoursWorkModal}
                       >
                         <Plus className="w-5 h-5" />
                       </button>
@@ -359,6 +389,21 @@ const Report = () => {
         </div>
       </div>
       {isTaskModalOpen && <TasksModal onClose={handleOpenTaskModal} id={id} />}
+      {isSuggestionsModalOpen && (
+        <SuggestionsModal onClose={handleOpenSuggestionsModal} id={id} />
+      )}
+
+      {isComplaintModalOpen && (
+        <ComplaintModal onClose={handleOpenComplaintModal} id={id} />
+      )}
+
+      {isObstacleModalOpen && (
+        <ObstacleModal onClose={handleOpenObstacleModal} id={id} />
+      )}
+
+      {isOutOfHoursWorkModalOpen && (
+        <OutOfHoursWorkModal onClose={handleOpenOutOfHoursWorkModal} id={id} />
+      )}
     </div>
   );
 };

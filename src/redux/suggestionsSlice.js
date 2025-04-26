@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { useGetData } from "../hooks/useGetData";
 import { useDeleteData } from "../hooks/useDeleteData";
+import { useInsertData } from "../hooks/useInsertData";
 
 const initialState = {
   suggestion: [],
@@ -22,7 +23,17 @@ export const deleteSuggestion = createAsyncThunk(
   "suggestions/delete",
   async (id) => {
     await useDeleteData(`/api/v1/suggestions/${id}`);
-    return id; 
+    return id;
+  }
+);
+
+// إضافة اقتراح
+export const addSuggestion = createAsyncThunk(
+  "suggestions/create",
+  async ({ reportId, suggestionData }) => {
+    console.log(reportId, suggestionData);
+    const { data } = await useInsertData(`/api/v1/reports/${reportId}/suggestions/`, suggestionData);
+    return data.data;
   }
 );
 
@@ -44,7 +55,7 @@ const suggestionsSlice = createSlice({
         state.error = action.error.message;
       })
 
-      // حالات الحذف
+      // حذف اقتراح
       .addCase(deleteSuggestion.pending, (state) => {
         state.isLoading = true;
       })
@@ -55,6 +66,19 @@ const suggestionsSlice = createSlice({
         );
       })
       .addCase(deleteSuggestion.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      })
+
+      // إضافة اقتراح
+      .addCase(addSuggestion.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(addSuggestion.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.suggestion.push(action.payload);
+      })
+      .addCase(addSuggestion.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
       });

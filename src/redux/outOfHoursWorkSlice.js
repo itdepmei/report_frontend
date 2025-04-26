@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { useGetData } from "../hooks/useGetData";
-import { useDeleteData } from "../hooks/useDeleteData"; // تأكد أنه موجود
+import { useDeleteData } from "../hooks/useDeleteData";
+import { useInsertData } from "../hooks/useInsertData";
 
 const initialState = {
   outOfHoursWork: [],
@@ -23,6 +24,15 @@ export const deleteOutOfHoursWork = createAsyncThunk(
   async (id) => {
     await useDeleteData(`/api/v1/out-of-hours-work/${id}`);
     return id;
+  }
+);
+
+// إضافة عمل خارج الدوام
+export const addOutOfHoursWork = createAsyncThunk(
+  "outOfHoursWork/create",
+  async ({ reportId, outOfHoursWorkData }) => {
+    const { data } = await useInsertData(`/api/v1/reports/${reportId}/outOfHoursWork/`, outOfHoursWorkData);
+    return data.data;
   }
 );
 
@@ -55,6 +65,19 @@ const outOfHoursWorkSlice = createSlice({
         );
       })
       .addCase(deleteOutOfHoursWork.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      })
+
+      // إضافة
+      .addCase(addOutOfHoursWork.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(addOutOfHoursWork.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.outOfHoursWork.push(action.payload);
+      })
+      .addCase(addOutOfHoursWork.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
       });
