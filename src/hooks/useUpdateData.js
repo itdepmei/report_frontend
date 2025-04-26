@@ -10,6 +10,11 @@ const useInUpdateDataWithImage = async (url, parmas) => {
 }
 
 const useInsUpdateData = async (url, parmas) => {
+  
+    const res = await baseUrl.put(url, parmas);
+    return res;
+}
+const useInsUpdateDataWithToken = async (url, parmas) => {
     const config = {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
     }
@@ -17,4 +22,4 @@ const useInsUpdateData = async (url, parmas) => {
     return res;
 }
 
-export { useInUpdateDataWithImage, useInsUpdateData };
+export { useInUpdateDataWithImage, useInsUpdateData, useInsUpdateDataWithToken };
