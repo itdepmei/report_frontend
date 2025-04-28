@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { useGetData, useGetDataToken } from "../hooks/useGetData";
-import { useInsertData, useInsertDataWithToken } from "../hooks/useInsertData";
-import { useDeleteData } from "../hooks/useDeleteData"; // ✅ استيراد هوك الحذف
+import { useGetDataToken } from "../hooks/useGetData";
+import { useInsertDataWithToken } from "../hooks/useInsertData";
+import { useDeleteData } from "../hooks/useDeleteData";
+import { useUpdateDataWithToken } from "../hooks/useUpdateData"; // ✅ استيراد هوك التحديث (PUT)
 
 const initialState = {
   data: [],
@@ -9,6 +10,8 @@ const initialState = {
   error: null,
   singleReport: [],
   createdReport: null,
+  sendReport: [],
+  updatedSendReport: null, // 🔥 إضافة حالة لتخزين بيانات تحديث sendToAssistant
 };
 
 // Get all reports
@@ -20,6 +23,12 @@ export const getAllReports = createAsyncThunk("reports/getAll", async () => {
 // Get single report
 export const getOneReport = createAsyncThunk("reports/getOne", async (id) => {
   const { data } = await useGetDataToken(`/api/v1/reports/${id}`);
+  return data.data;
+});
+
+// Get send reports
+export const getSendReport = createAsyncThunk("reports/getSend", async () => {
+  const { data } = await useGetDataToken(`/api/v1/reports/sendToAssistant/`);
   return data.data;
 });
 
@@ -38,13 +47,28 @@ export const createReport = createAsyncThunk(
   }
 );
 
-// ✅ Delete report
+// Delete report
 export const deleteReport = createAsyncThunk(
   "reports/delete",
   async (id, thunkAPI) => {
     try {
       await useDeleteData(`/api/v1/reports/${id}`);
-      return id; // نعيد الـ ID لاستخدامه في الحذف من الـ state
+      return id;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || error.message
+      );
+    }
+  }
+);
+
+// Send report to assistant (PUT)
+export const sendReportToAssistant = createAsyncThunk(
+  "reports/sendToAssistant",
+  async (id, thunkAPI) => {
+    try {
+      const { data } = await useUpdateDataWithToken(`/api/v1/reports/${id}/sendToAssistant/`, {});
+      return data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
         error.response?.data?.message || error.message
@@ -56,7 +80,6 @@ export const deleteReport = createAsyncThunk(
 const ReportSlice = createSlice({
   name: "reportsSlice",
   initialState,
-
   extraReducers: (builder) => {
     builder
       // Get all reports
@@ -81,6 +104,19 @@ const ReportSlice = createSlice({
         state.singleReport = action.payload;
       })
       .addCase(getOneReport.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      })
+
+      // Get send reports
+      .addCase(getSendReport.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getSendReport.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.sendReport = action.payload;
+      })
+      .addCase(getSendReport.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
       })
@@ -110,6 +146,19 @@ const ReportSlice = createSlice({
         state.data = state.data.filter((report) => report._id !== action.payload);
       })
       .addCase(deleteReport.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+
+      // Send report to assistant (PUT)
+      .addCase(sendReportToAssistant.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(sendReportToAssistant.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.updatedSendReport = action.payload;
+      })
+      .addCase(sendReportToAssistant.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });

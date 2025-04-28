@@ -1,31 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { Send , Eye, FileText, Trash2 } from "lucide-react";
+import { Send, Eye, FileText, Trash2 } from "lucide-react";
 import formatDate from "../hook/UtilsFunctions/FormatDate";
 import { useDispatch } from "react-redux";
-import { deleteReport } from "../redux/reportsSlice";
-import DeleteModal from "./modal/DeleteModal";
+import { sendReportToAssistant } from "../redux/reportsSlice";
 
-const ReportCard = ({ id, name, date }) => {
-  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+const ReportCard = ({ id, name, date, onDelete }) => {
   const dispatch = useDispatch();
 
-  const handleDeleteConfirm = async () => {
-    await dispatch(deleteReport(id));
-    setDeleteModalOpen(false);
-  };
-
-  const handleDeleteClick = () => {
-    setDeleteModalOpen(true);
-  };
-
-  const handleCancel = () => {
-    setDeleteModalOpen(false);
-  };
-
   const handleSendClick = () => {
-    // هنا تضع منطق زر الإرسال
-    console.log(`تم إرسال التقرير برقم: ${id}`);
+    dispatch(sendReportToAssistant(id));
   };
 
   return (
@@ -43,7 +27,7 @@ const ReportCard = ({ id, name, date }) => {
 
               <div className="flex gap-2">
                 <button
-                  onClick={handleDeleteClick}
+                  onClick={() => onDelete(id)}
                   className="p-2 text-rose-600 hover:bg-rose-100/80 rounded-lg transition-all duration-300 shadow-sm hover:shadow-rose-100"
                   aria-label="حذف"
                 >
@@ -53,8 +37,9 @@ const ReportCard = ({ id, name, date }) => {
                   onClick={handleSendClick}
                   className="p-2 text-indigo-600 hover:bg-indigo-100/80 rounded-lg transition-all duration-300 shadow-sm hover:shadow-indigo-100"
                   aria-label="إرسال"
+                  title="إرسال التقرير"
                 >
-                  <Send  className="w-5 h-5" />
+                  <Send className="w-5 h-5" />
                 </button>
               </div>
             </div>
@@ -78,10 +63,6 @@ const ReportCard = ({ id, name, date }) => {
           </div>
         </div>
       </div>
-
-      {isDeleteModalOpen && (
-        <DeleteModal onCancel={handleCancel} onConfirm={handleDeleteConfirm} />
-      )}
     </div>
   );
 };

@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { AlertTriangle } from "lucide-react";
 
 const DeleteModal = ({ onCancel, onConfirm }) => {
   return (
-    <div className="absolute top-0 left-0 w-full h-full   backdrop-blur-sm flex justify-center items-center z-50">
-      <div className="bg-white rounded-lg shadow-lg p-6 max-w-md w-full">
+    <div className="fixed top-0 left-0 w-full h-full backdrop-blur-sm flex justify-center items-center z-50">
+      <div className="bg-white rounded-lg shadow-lg p-6 max-w-md w-full mx-4">
         <div className="flex flex-col items-center text-center mb-6">
           <div className="h-16 w-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
             <AlertTriangle className="h-8 w-8 text-red-600" />

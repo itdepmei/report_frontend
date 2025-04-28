@@ -103,6 +103,7 @@ const Register = () => {
               >
                 <option value="user">مستخدم</option>
                 <option value="admin">مسؤول</option>
+                <option value="assistant">متابعة</option>
               </select>
               <div className={iconContainerClass}>
                 <FaIdCard className={iconClass} />

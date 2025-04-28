@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../redux/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 const LoginHook = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const onChangEmail = (e) => {
+  const onChangeEmail = (e) => {
     setEmail(e.target.value);
   };
 
@@ -45,22 +47,22 @@ const LoginHook = () => {
   useEffect(() => {
     if (!loading) {
       if (user) {
-        if (user.data && user.data) {
-          if (
-            user.data.error ===
-            "No active account found with the given credentials"
-          ) {
+        if (user.data) {
+          if (user.data.error) {
+            // في حالة وجود خطأ (مثل بيانات خاطئة)
+            console.log(user.data.error, "error");
             localStorage.removeItem("token");
             localStorage.removeItem("user");
-            console.log("اسم المستخدم او كلمة السر غير صحيحة", "error");
             return;
           }
 
+          // في حالة نجاح تسجيل الدخول
           localStorage.setItem("token", user.token);
           localStorage.setItem("user", JSON.stringify(user.data));
-
           console.log("تم تسجيل الدخول بنجاح", "success");
+          navigate("/");
         } else {
+          // في حال لم يرجع بيانات صحيحة
           localStorage.removeItem("token");
           localStorage.removeItem("user");
         }
@@ -72,7 +74,7 @@ const LoginHook = () => {
     email,
     password,
     loading,
-    onChangEmail,
+    onChangeEmail,
     onChangePassword,
     onSubmit,
   ];
