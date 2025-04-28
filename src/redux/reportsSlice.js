@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { useGetData } from "../hooks/useGetData";
-import { useInsertData } from "../hooks/useInsertData";
+import { useGetData, useGetDataToken } from "../hooks/useGetData";
+import { useInsertData, useInsertDataWithToken } from "../hooks/useInsertData";
 import { useDeleteData } from "../hooks/useDeleteData"; // ✅ استيراد هوك الحذف
 
 const initialState = {
@@ -13,13 +13,13 @@ const initialState = {
 
 // Get all reports
 export const getAllReports = createAsyncThunk("reports/getAll", async () => {
-  const { data } = await useGetData("/api/v1/reports/");
+  const { data } = await useGetDataToken("/api/v1/reports/");
   return data.data;
 });
 
 // Get single report
 export const getOneReport = createAsyncThunk("reports/getOne", async (id) => {
-  const { data } = await useGetData(`/api/v1/reports/${id}`);
+  const { data } = await useGetDataToken(`/api/v1/reports/${id}`);
   return data.data;
 });
 
@@ -28,7 +28,7 @@ export const createReport = createAsyncThunk(
   "reports/create",
   async (reportData, thunkAPI) => {
     try {
-      const { data } = await useInsertData("/api/v1/reports", reportData);
+      const { data } = await useInsertDataWithToken("/api/v1/reports", reportData);
       return data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(

@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { AsteriskSquare, Eye, FileText, Pencil, Trash2 } from "lucide-react";
+import { Send , Eye, FileText, Trash2 } from "lucide-react";
 import formatDate from "../hook/UtilsFunctions/FormatDate";
 import { useDispatch } from "react-redux";
 import { deleteReport } from "../redux/reportsSlice";
 import DeleteModal from "./modal/DeleteModal";
+
 const ReportCard = ({ id, name, date }) => {
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const dispatch = useDispatch();
+
   const handleDeleteConfirm = async () => {
     await dispatch(deleteReport(id));
     setDeleteModalOpen(false);
@@ -20,6 +22,12 @@ const ReportCard = ({ id, name, date }) => {
   const handleCancel = () => {
     setDeleteModalOpen(false);
   };
+
+  const handleSendClick = () => {
+    // هنا تضع منطق زر الإرسال
+    console.log(`تم إرسال التقرير برقم: ${id}`);
+  };
+
   return (
     <div>
       <div className="group relative px-4 py-6 hover:transform hover:scale-[1.02] transition-all duration-300">
@@ -32,7 +40,7 @@ const ReportCard = ({ id, name, date }) => {
                 <FileText className="w-5 h-5 text-blue-600 opacity-75 group-hover:opacity-100" />
                 <div className="absolute inset-0 border-2 border-blue-200 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
-              {/* <ActionButtons onDelete={handleDelete} onEdit={handleEdit} /> */}
+
               <div className="flex gap-2">
                 <button
                   onClick={handleDeleteClick}
@@ -42,10 +50,11 @@ const ReportCard = ({ id, name, date }) => {
                   <Trash2 className="w-5 h-5" />
                 </button>
                 <button
-                  className="p-2 text-emerald-600 hover:bg-emerald-100/80 rounded-lg transition-all duration-300 shadow-sm hover:shadow-emerald-100"
-                  aria-label="تعديل"
+                  onClick={handleSendClick}
+                  className="p-2 text-indigo-600 hover:bg-indigo-100/80 rounded-lg transition-all duration-300 shadow-sm hover:shadow-indigo-100"
+                  aria-label="إرسال"
                 >
-                  <Pencil className="w-5 h-5" />
+                  <Send  className="w-5 h-5" />
                 </button>
               </div>
             </div>
@@ -69,6 +78,7 @@ const ReportCard = ({ id, name, date }) => {
           </div>
         </div>
       </div>
+
       {isDeleteModalOpen && (
         <DeleteModal onCancel={handleCancel} onConfirm={handleDeleteConfirm} />
       )}

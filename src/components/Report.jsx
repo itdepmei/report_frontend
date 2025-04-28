@@ -26,6 +26,8 @@ import ReportWord from "./ReportWord";
 import formatTime from "../hook/UtilsFunctions/FormatTime";
 
 const Report = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+
   const dispatch = useDispatch();
 
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
@@ -382,7 +384,7 @@ const Report = () => {
         </div>
 
         <div className="text-sm absolute left-2">
-          <div className="text-xl font-bold">الاسم: الحسن محمد رشيد</div>
+          <div className="text-xl font-bold">الاسم: {user.name}</div>
           <div className="text-xl font-bold">
             قسم: البرمجيات وتكنلوجيا المعلومات{" "}
           </div>

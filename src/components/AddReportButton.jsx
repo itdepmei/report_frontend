@@ -6,6 +6,7 @@ import { Plus } from "lucide-react";
 const AddReportButton = () => {
   const dispatch = useDispatch();
 
+
   const handleAddReport = () => {
     const newReport = {
       date: new Date().toISOString("ar-EG"),

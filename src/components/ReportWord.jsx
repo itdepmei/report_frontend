@@ -25,6 +25,8 @@ import GetAllOutOfHoursWorkHook from "../hook/get-all-outOfHoursWork-hook";
 import formatTime from "../hook/UtilsFunctions/FormatTime";
 
 const ReportWord = ({ id }) => {
+  const user = JSON.parse(localStorage.getItem("user"));
+
   const [singleReport] = GetOneReportHook(id);
   const [task] = GetTasksFromReportHook(id);
   const [suggestion] = GetAllSuggestionsHook(id);
@@ -577,7 +579,8 @@ const ReportWord = ({ id }) => {
               spacing: { before: 200 },
               children: [
                 new TextRun({
-                  text: "الاسم: الحسن محمد رشيد",
+                  text: "الاسم: " + user.name,
+
                   bold: true,
                   size: 28,
                 }),

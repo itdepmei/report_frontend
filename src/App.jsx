@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AllReportPage from "./Pages/AllReportPage";
 import Login from "./Pages/Auth/Login";
 import Register from "./Pages/Auth/Register";
+import HomePage from "./Pages/HomePage";
 
 const App = () => {
   return (
@@ -11,6 +12,7 @@ const App = () => {
       
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<HomePage />} />
           <Route path="/report" element={<AllReportPage />} />
           <Route path="/report/:id" element={<Report />} />
           <Route path="/login" element={<Login />} />
