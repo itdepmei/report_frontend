@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { addTask, updateTask } from "../redux/tasksSlice";
 import { useDispatch } from "react-redux";
+import notify from "./useNotification";
+
 const AddTaskHook = (reportId) => {
   const dispatch = useDispatch();
 
@@ -26,29 +28,47 @@ const AddTaskHook = (reportId) => {
   };
 
   const handleAddTask = () => {
+    if (!taskTitle || !timeStart || !timeEnd ) {
+      notify("يرجى ملء جميع الحقول قبل إضافة المهمة", "error");
+      return;
+    }
+
+    const newTask = {
+      title: taskTitle,
+      timeStart: timeStart,
+      timeEnd: timeEnd,
+      note: note || "لا يوجد",  
+      report: reportId,
+    };
+    
+
+    dispatch(addTask({ reportId, taskData: newTask }));
+    notify("تم إضافة المهمة بنجاح", "success");
+
+    // إعادة تعيين الحقول بعد الإضافة (اختياري)
+    setTaskTitle("");
+    setTimeStart("");
+    setTimeEnd("");
+    setNote("");
+  };
+
+  const handleUpdateTask = () => {
+    if (!taskTitle || !timeStart || !timeEnd) {
+      notify("يرجى ملء جميع الحقول قبل تحديث المهمة", "error");
+      return;
+    }
+
     const newTask = {
       title: taskTitle,
       timeStart: timeStart,
       timeEnd: timeEnd,
       note: note,
-      report: reportId, 
+      report: reportId,
     };
 
-    dispatch(addTask({ reportId, taskData: newTask }));
-};
-
-
-const handleUpdateTask = () => {
-  const newTask = {
-    title: taskTitle,
-      timeStart: timeStart,
-      timeEnd: timeEnd,
-      note: note,
-      report: reportId, 
+    dispatch(updateTask({ reportId, updatedData: newTask }));
+    notify("تم تحديث المهمة بنجاح", "success");
   };
-
-  dispatch(updateTask({ reportId, updatedData: newTask }));
-};
 
   return [
     taskTitle,

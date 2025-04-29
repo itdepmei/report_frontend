@@ -2,6 +2,8 @@ import React from "react";
 import { FaUserAlt, FaLock, FaSignInAlt } from "react-icons/fa";
 import urLogo from "../../assets/urlogo.png";
 import LoginHook from "../../hook/auth/login-hook";
+import { Toaster } from 'react-hot-toast';
+
 
 const Login = () => {
   const [
@@ -98,6 +100,8 @@ const Login = () => {
           </p>
         </div>
       </div>
+      <Toaster  />
+
     </div>
   );
 };

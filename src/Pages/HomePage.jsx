@@ -14,7 +14,7 @@ const HomePage = () => {
           <div className="text-black font-bold text-4xl mb-4 sm:mb-0">UR</div>
 
           {/* menu */}
-          <div className="flex flex-col sm:flex-row items-center sm:space-x-10 space-y-4 sm:space-y-0 mb-4 sm:mb-0">
+          <div className="flex flex-col sm:flex-row items-center  sm:space-x-10 space-y-4 sm:space-y-0 mb-4 sm:mb-0">
             <a href="#" className="text-black text-lg hover:text-gray-600">
               Home
             </a>
@@ -24,6 +24,7 @@ const HomePage = () => {
             <a href="#" className="text-black text-lg hover:text-gray-600">
               Contact
             </a>
+            
           </div>
 
           {/* login or profile */}
