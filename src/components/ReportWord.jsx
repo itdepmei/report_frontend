@@ -529,15 +529,14 @@ const ReportWord = ({ id }) => {
                           alignment: AlignmentType.CENTER,
                           children: [
                             new TextRun({
-                              text:
-                                (formatTime(outOfHoursWork[0]?.timeStart) ||
-                                  "لايوجد") +
-                                " - " +
-                                (formatTime(outOfHoursWork[0]?.timeEnd) ||
-                                  "لايوجد"),
+                              text: 
+                                ((outOfHoursWork[0]?.timeStart && outOfHoursWork[0]?.timeEnd) 
+                                  ? (formatTime(outOfHoursWork[0]?.timeStart) + " - " + formatTime(outOfHoursWork[0]?.timeEnd)) 
+                                  : "لايوجد"),
                               size: 24,
                             }),
                           ],
+                          
                         }),
                       ],
                     }),

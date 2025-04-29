@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Links } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import AppCard from "../components/AppCard";
 
@@ -45,10 +45,31 @@ const HomePage = () => {
         </div>
       </div>
 
+      <div className="container mx-auto px-6 py-8 md:py-16">
+        <div className="flex flex-col items-center justify-center text-center">
+          <h1
+            className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-blue-900 text-transparent bg-clip-text py-2 rtl"
+            style={{
+              direction: "rtl",
+              fontFamily: "Arial, sans-serif",
+              lineHeight: "1.3",
+              padding: "0.5rem 0",
+            }}
+          >
+            نظام إدارة التقارير
+          </h1>
+          <div className="h-1 w-24 bg-blue-600 rounded-full mb-6"></div>
+          <p className="text-lg md:text-xl text-gray-600 max-w-3xl">
+            منصة متكاملة لإدارة وتنظيم التقارير بكفاءة عالية
+          </p>
+        </div>
+      </div>
+
       {/* نصف دائرة أسفل الصفحة */}
-      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-full h-[400px] bg-gray-200 lg:rounded-t-full">
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 grid grid-cols-4 gap-10">
+      <div className="w-full min-h-[420px] bg-gray-200 lg:rounded-t-full flex justify-center items-center">
+        <div className="grid grid-cols-2  md:grid-cols-3 lg:grid-cols-5 gap-[100px]">
           <AppCard />
+       
         </div>
       </div>
     </div>

@@ -87,13 +87,13 @@ const RegisterHook = () => {
     setLoading(false);
   };
 
-  useEffect(() => {
-    if (!loading && user?.data) {
-      localStorage.setItem("token", user.token);
-      localStorage.setItem("user", user);
-      console.log("تم التسجيل بنجاح", "success");
-    }
-  }, [loading]);
+  // useEffect(() => {
+  //   if (!loading && user?.data) {
+  //     localStorage.setItem("token", user.token);
+  //     localStorage.setItem("user", user);
+  //     console.log("تم التسجيل بنجاح", "success");
+  //   }
+  // }, [loading]);
 
   return [
     role,

@@ -10,6 +10,7 @@ const LoginHook = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [loginClicked, setLoginClicked] = useState(false); // ✅ إضافة
 
   const onChangeEmail = (e) => {
     setEmail(e.target.value);
@@ -24,7 +25,6 @@ const LoginHook = () => {
       console.log("من فضلك ادخل البريد الالكتروني", "error");
       return false;
     }
-
     if (password === "") {
       console.log("من فضلك ادخل كلمة السر", "error");
       return false;
@@ -37,6 +37,7 @@ const LoginHook = () => {
     if (!isValid) {
       return;
     }
+    setLoginClicked(true); // ✅ تسجيل أن المستخدم حاول تسجيل دخول
     setLoading(true);
     await dispatch(loginUser({ email, password }));
     setLoading(false);
@@ -45,30 +46,26 @@ const LoginHook = () => {
   const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (!loading) {
+    if (!loading && loginClicked) { // ✅ إضافة شرط loginClicked
       if (user) {
         if (user.data) {
           if (user.data.error) {
-            // في حالة وجود خطأ (مثل بيانات خاطئة)
             console.log(user.data.error, "error");
             localStorage.removeItem("token");
             localStorage.removeItem("user");
             return;
           }
-
-          // في حالة نجاح تسجيل الدخول
           localStorage.setItem("token", user.token);
           localStorage.setItem("user", JSON.stringify(user.data));
           console.log("تم تسجيل الدخول بنجاح", "success");
           navigate("/");
         } else {
-          // في حال لم يرجع بيانات صحيحة
           localStorage.removeItem("token");
           localStorage.removeItem("user");
         }
       }
     }
-  }, [loading, user]);
+  }, [loading, user, loginClicked]); // ✅ لاحظ إضافة loginClicked
 
   return [
     email,

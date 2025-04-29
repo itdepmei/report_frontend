@@ -13,7 +13,6 @@ const TasksModal = ({ onClose, id }) => {
     handleTimeEndChange,
     handleNoteChange,
     handleAddTask,
-    handleUpdateTask
   ] = AddTaskHook(id);
 
   const handleSubmit = (e) => {
