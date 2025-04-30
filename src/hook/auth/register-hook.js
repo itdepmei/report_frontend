@@ -30,6 +30,7 @@ const RegisterHook = () => {
   };
 
   const onChangeRole = (e) => {
+    console.log(e.target.value);
     setRole(e.target.value);
   };
 
@@ -87,13 +88,11 @@ const RegisterHook = () => {
     setLoading(false);
   };
 
-  // useEffect(() => {
-  //   if (!loading && user?.data) {
-  //     localStorage.setItem("token", user.token);
-  //     localStorage.setItem("user", user);
-  //     console.log("تم التسجيل بنجاح", "success");
-  //   }
-  // }, [loading]);
+  useEffect(() => {
+    if (!loading ) {
+      console.log("تم التسجيل بنجاح", "success");
+    }
+  }, [loading]);
 
   return [
     role,

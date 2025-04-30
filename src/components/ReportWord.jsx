@@ -602,7 +602,8 @@ const ReportWord = ({ id }) => {
     });
 
     const blob = await Packer.toBlob(doc);
-    saveAs(blob, "report.docx");
+    saveAs(blob, `تقرير_يومي_${formatDate(singleReport?.date)}/${user.name}.docx`);
+    
   };
 
   return (

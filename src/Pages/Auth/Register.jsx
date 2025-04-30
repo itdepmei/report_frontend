@@ -42,7 +42,10 @@ const Register = () => {
   const iconClass = "text-indigo-600 text-lg";
 
   return (
-    <div dir="rtl" className="min-h-screen flex items-center justify-center bg-gray-200 p-4">
+    <div
+      dir="rtl"
+      className="min-h-screen flex items-center justify-center bg-gray-200 p-4"
+    >
       <div className="bg-white p-8 rounded-lg shadow-2xl w-full max-w-5xl">
         <div className="flex flex-col md:flex-row items-center mb-6">
           <img
@@ -51,10 +54,10 @@ const Register = () => {
             className="w-[100px] h-[100px] object-contain"
           />
           <div className="mr-4 text-center md:text-right">
-            <h2 className="text-3xl font-bold text-indigo-600">تسجيل حساب جديد</h2>
-            <p className="text-xl font-bold text-gray-500">
-              منتجات اور
-            </p>
+            <h2 className="text-3xl font-bold text-indigo-600">
+              تسجيل حساب جديد
+            </h2>
+            <p className="text-xl font-bold text-gray-500">منتجات اور</p>
           </div>
         </div>
 
@@ -105,6 +108,7 @@ const Register = () => {
                 <option value="admin">مسؤول</option>
                 <option value="assistant">متابعة</option>
               </select>
+
               <div className={iconContainerClass}>
                 <FaIdCard className={iconClass} />
               </div>
