@@ -8,6 +8,7 @@ import Sidebar from "../components/Utils/Sidebar";
 import DeleteModal from "../components/modal/DeleteModal"; // استدعاء المودال هنا
 import { useDispatch } from "react-redux";
 import { deleteReport } from "../redux/reportsSlice";
+import notify from "../hook/useNotification";
 
 const AllReportPage = () => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -28,6 +29,8 @@ const AllReportPage = () => {
       setDeleteModalOpen(false);
       setSelectedReportId(null);
     }
+
+    notify("تم حذف التقرير", "success");
   };
 
   const handleCancelDelete = () => {
@@ -52,7 +55,7 @@ const AllReportPage = () => {
                   id={report._id}
                   name={user.name}
                   date={report.date}
-                  onDelete={handleDeleteClick} 
+                  onDelete={handleDeleteClick}
                 />
               ))}
           </div>
@@ -61,7 +64,10 @@ const AllReportPage = () => {
 
       {/* المودال يظهر هنا */}
       {isDeleteModalOpen && (
-        <DeleteModal onCancel={handleCancelDelete} onConfirm={handleDeleteConfirm} />
+        <DeleteModal
+          onCancel={handleCancelDelete}
+          onConfirm={handleDeleteConfirm}
+        />
       )}
     </div>
   );

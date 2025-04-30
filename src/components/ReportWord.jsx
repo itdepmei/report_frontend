@@ -578,7 +578,7 @@ const ReportWord = ({ id }) => {
               spacing: { before: 200 },
               children: [
                 new TextRun({
-                  text: "الاسم: " + user.name,
+                  text: "الاسم: " + singleReport.user.name,
 
                   bold: true,
                   size: 28,

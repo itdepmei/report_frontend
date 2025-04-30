@@ -47,6 +47,8 @@ const Report = () => {
   const [obstacle] = GetAllObstaclesHook(id, refresh);
   const [outOfHoursWork] = GetAllOutOfHoursWorkHook(id, refresh);
 
+  console.log(task);
+
   const handleOpenTaskModal = () => {
     setIsTaskModalOpen(!isTaskModalOpen);
   };
@@ -116,7 +118,7 @@ const Report = () => {
             {formatDate(singleReport?.date || "")}
           </h6>
         </div>
-        <ReportWord id={id}/>
+        <ReportWord id={id} />
 
         <div dir="rtl" className="p-4">
           <button
@@ -156,19 +158,21 @@ const Report = () => {
               {task && task.length > 0 ? (
                 task.map((taskItem, index) => (
                   <tr key={index} className="grid grid-cols-10">
-                    <td className="border border-black p-1 text-xs text-center break-words h-10">
+                    <td className="border border-black p-1 text-xs text-center break-words min-h-10 flex items-center justify-center">
                       {index + 1}
                     </td>
-                    <td className="col-span-3 border border-black p-1 text-md text-right break-words h-10">
+
+                    <td className="col-span-3 border border-black p-1 text-md text-right break-words min-min-h-10">
                       {taskItem.title}
                     </td>
-                    <td className="col-span-2 border border-black p-1 text-md text-center break-words h-10">
-                      {formatTime(taskItem.timeStart)} - {formatTime(taskItem.timeEnd)}
+                    <td className="col-span-2 border border-black p-1 text-md text-center break-words min-h-10 flex items-center justify-center">
+                      {formatTime(taskItem.timeStart)} -{" "}
+                      {formatTime(taskItem.timeEnd)}
                     </td>
-                    <td className="col-span-2 border border-black p-1 text-md text-right break-words h-10">
+                    <td className="col-span-2 border border-black p-1 text-md text-right break-words min-h-10 flex items-center justify-center">
                       {taskItem.note}
                     </td>
-                    <td className="col-span-2 border border-black p-1 flex justify-center items-center h-10">
+                    <td className="col-span-2 border border-black p-1 flex justify-center items-center min-h-10">
                       <div className="flex gap-2">
                         <button
                           onClick={() => handleDeleteTask(taskItem._id)}
@@ -189,28 +193,28 @@ const Report = () => {
                 ))
               ) : (
                 <tr className="grid grid-cols-10">
-                  <td className="border border-black p-1 text-xs text-center break-words h-10"></td>
-                  <td className="col-span-3 border border-black p-1 text-md text-right break-words h-10"></td>
-                  <td className="col-span-2 border border-black p-1 text-md text-center break-words h-10"></td>
-                  <td className="col-span-2 border border-black p-1 text-md text-right break-words h-10"></td>
-                  <td className="col-span-2 border border-black p-1 flex justify-center items-center h-10"></td>
+                  <td className="border border-black p-1 text-xs text-center break-words min-h-10"></td>
+                  <td className="col-span-3 border border-black p-1 text-md text-right break-words min-h-10"></td>
+                  <td className="col-span-2 border border-black p-1 text-md text-center break-words min-h-10"></td>
+                  <td className="col-span-2 border border-black p-1 text-md text-right break-words min-h-10"></td>
+                  <td className="col-span-2 border border-black p-1 flex justify-center items-center min-h-10"></td>
                 </tr>
               )}
 
               <tr className="grid grid-cols-10 ">
-                <td className="border border-black p-1 text-xs text-center break-words h-10">
+                <td className="border border-black p-1 text-xs text-center break-words min-h-10 flex items-center justify-center">
                   {(task?.length || 0) + 1}
                 </td>
-                <td className="col-span-3 border border-black p-1 text-md text-right break-words h-10 font-bold">
+                <td className="col-span-3 border border-black p-1 text-md text-right break-words min-h-10 font-bold flex items-center justify-center">
                   المقترحات التي تخص العمل
                 </td>
-                <td className="col-span-2 border border-black p-1 text-md text-center break-words h-10">
+                <td className="col-span-2 border border-black p-1 text-md text-center break-words min-h-10 flex items-center justify-center">
                   لا يوجد
                 </td>
-                <td className="col-span-2 border border-black p-1 text-md text-right break-words h-10">
+                <td className="col-span-2 border border-black p-1 text-md text-right break-words min-h-10">
                   {suggestion && suggestion[0]?.note}
                 </td>
-                <td className="col-span-2 border border-black p-1 flex justify-center items-center h-10">
+                <td className="col-span-2 border border-black p-1 flex justify-center items-center min-h-10">
                   <div className="flex gap-2">
                     {suggestion && suggestion[0]?._id ? (
                       <>
@@ -243,19 +247,19 @@ const Report = () => {
                 </td>
               </tr>
               <tr className="grid grid-cols-10">
-                <td className="border border-black p-1 text-xs text-center break-words h-10">
+                <td className="border border-black p-1 text-xs text-center break-words min-h-10 flex items-center justify-center">
                   {(task?.length || 0) + 2}
                 </td>
-                <td className="col-span-3 border border-black p-1 text-md text-right break-words h-10 font-bold">
+                <td className="col-span-3 border border-black p-1 text-md text-right break-words min-h-10 font-bold flex items-center justify-center">
                   الشكاوى
                 </td>
-                <td className="col-span-2 border border-black p-1 text-md text-center break-words h-10">
+                <td className="col-span-2 border border-black p-1 text-md text-center break-words min-h-10 flex items-center justify-center">
                   لا يوجد
                 </td>
-                <td className="col-span-2 border border-black p-1 text-md text-right break-words h-10">
+                <td className="col-span-2 border border-black p-1 text-md text-right break-words min-h-10 flex items-center justify-center">
                   {complaint && complaint[0]?.note}
                 </td>
-                <td className="col-span-2 border border-black p-1 flex justify-center items-center h-10">
+                <td className="col-span-2 border border-black p-1 flex justify-center items-center min-h-10">
                   <div className="flex gap-2">
                     {complaint && complaint[0]?._id ? (
                       <>
@@ -288,19 +292,19 @@ const Report = () => {
                 </td>
               </tr>
               <tr className="grid grid-cols-10">
-                <td className="border border-black p-1 text-xs text-center break-words h-10">
+                <td className="border border-black p-1 text-xs text-center break-words min-h-10 flex items-center justify-center">
                   {(task?.length || 0) + 3}
                 </td>
-                <td className="col-span-3 border border-black p-1 text-md text-right break-words h-10 font-bold">
+                <td className="col-span-3 border border-black p-1 text-md text-right break-words min-h-10 font-bold flex items-center justify-center">
                   المعوقات
                 </td>
-                <td className="col-span-2 border border-black p-1 text-md text-center break-words h-10">
+                <td className="col-span-2 border border-black p-1 text-md text-center break-words min-h-10 flex items-center justify-center">
                   لا يوجد
                 </td>
-                <td className="col-span-2 border border-black p-1 text-md text-right break-words h-10">
+                <td className="col-span-2 border border-black p-1 text-md text-right break-words min-h-10 flex items-center justify-center">
                   {obstacle && obstacle[0]?.note}
                 </td>
-                <td className="col-span-2 border border-black p-1 flex justify-center items-center h-10">
+                <td className="col-span-2 border border-black p-1 flex justify-center items-center min-h-10">
                   <div className="flex gap-2">
                     {obstacle && obstacle[0]?._id ? (
                       <>
@@ -331,23 +335,23 @@ const Report = () => {
                 </td>
               </tr>
               <tr className="grid grid-cols-10">
-                <td className="border border-black p-1 text-xs text-center break-words h-10">
+                <td className="border border-black p-1 text-xs text-center break-words min-h-10 flex items-center justify-center">
                   {(task?.length || 0) + 4}
                 </td>
-                <td className="col-span-3 border border-black p-1 text-md text-right break-words h-10 font-bold">
+                <td className="col-span-3 border border-black p-1 text-md text-right break-words min-h-10 font-bold flex items-center justify-center">
                   اعمال منفذة خارج أوقات الدوام الرسمي
                 </td>
-                <td className="col-span-2 border border-black p-1 text-md text-center break-words h-10">
+                <td className="col-span-2 border border-black p-1 text-md text-center break-words min-h-10 flex items-center justify-center">
                   {outOfHoursWork &&
                   outOfHoursWork[0]?.timeStart &&
                   outOfHoursWork[0]?.timeEnd
                     ? `${outOfHoursWork[0].timeStart} - ${outOfHoursWork[0].timeEnd}`
                     : "لا يوجد"}
                 </td>
-                <td className="col-span-2 border border-black p-1 text-md text-right break-words h-10">
+                <td className="col-span-2 border border-black p-1 text-md text-right break-words min-h-10 flex items-center justify-center">
                   {outOfHoursWork && outOfHoursWork[0]?.note}
                 </td>
-                <td className="col-span-2 border border-black p-1 flex justify-center items-center h-10">
+                <td className="col-span-2 border border-black p-1 flex justify-center items-center min-h-10">
                   <div className="flex gap-2">
                     {outOfHoursWork && outOfHoursWork[0]?._id ? (
                       <>
@@ -384,7 +388,9 @@ const Report = () => {
         </div>
 
         <div className="text-sm absolute left-2">
-          <div className="text-xl font-bold">الاسم: {user.name}</div>
+          <div className="text-xl font-bold">
+            الاسم: {singleReport?.user?.name}
+          </div>
           <div className="text-xl font-bold">
             قسم: البرمجيات وتكنلوجيا المعلومات{" "}
           </div>

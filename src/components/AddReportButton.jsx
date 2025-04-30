@@ -2,17 +2,23 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { createReport } from "../redux/reportsSlice";
 import { Plus } from "lucide-react";
-
+import notify from "../hook/useNotification";
+import { Toaster } from "react-hot-toast";
 const AddReportButton = () => {
   const dispatch = useDispatch();
 
-
-  const handleAddReport = () => {
+  const handleAddReport = async () => {
     const newReport = {
       date: new Date().toISOString("ar-EG"),
     };
 
-    dispatch(createReport(newReport));
+    try {
+      const res = await dispatch(createReport(newReport)).unwrap();
+      notify("تم إنشاء التقرير بنجاح", "success");
+    } catch (error) {
+      console.error(error);
+      notify("حدث خطأ أثناء إنشاء التقرير", "error");
+    }
   };
 
   return (
@@ -24,6 +30,8 @@ const AddReportButton = () => {
         <span className="text-md">إضافة تقرير</span>
         <Plus size={22} />
       </button>
+      <Toaster  />
+
     </div>
   );
 };

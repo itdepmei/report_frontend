@@ -1,14 +1,15 @@
 import React from "react";
 import { X, AlignLeft, Check } from "lucide-react";
 import AddSuggestionHook from "../../hook/add-suggestion-hook";
+import { Toaster } from "react-hot-toast";
 
 const SuggestionsModal = ({ onClose, id }) => {
-    const [note, handleNoteChange, handleAddSuggestion] = AddSuggestionHook(id);
-    const handleSubmit = async(e) => {
-        e.preventDefault();
-        await handleAddSuggestion();
-        onClose();
-      };
+  const [note, handleNoteChange, handleAddSuggestion] = AddSuggestionHook(id);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await handleAddSuggestion();
+    onClose();
+  };
   return (
     <div
       dir="rtl"
@@ -17,7 +18,7 @@ const SuggestionsModal = ({ onClose, id }) => {
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-6 max-w-md w-full mx-4 transform transition-all duration-300 animate-fadeIn">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
-          المقترحات التي تخص العمل
+            المقترحات التي تخص العمل
           </h2>
           <button
             onClick={onClose}
@@ -57,11 +58,12 @@ const SuggestionsModal = ({ onClose, id }) => {
               className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 focus:ring-opacity-50 transition-colors flex items-center shadow-md"
             >
               <Check className="ml-2" size={18} />
-              حفظ 
+              حفظ
             </button>
           </div>
         </form>
       </div>
+      <Toaster />
     </div>
   );
 };

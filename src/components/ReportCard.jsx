@@ -4,6 +4,7 @@ import { Send, Eye, FileText, Trash2 } from "lucide-react";
 import formatDate from "../hook/UtilsFunctions/FormatDate";
 import { useDispatch } from "react-redux";
 import { sendReportToAssistant } from "../redux/reportsSlice";
+import notify from "../hook/useNotification";
 
 const ReportCard = ({ id, name, date, onDelete }) => {
   const dispatch = useDispatch();
@@ -11,6 +12,10 @@ const ReportCard = ({ id, name, date, onDelete }) => {
   const handleSendClick = () => {
     dispatch(sendReportToAssistant(id));
   };
+
+  const handleDelete = () => {
+    onDelete(id)
+  }
 
   return (
     <div>
@@ -27,7 +32,7 @@ const ReportCard = ({ id, name, date, onDelete }) => {
 
               <div className="flex gap-2">
                 <button
-                  onClick={() => onDelete(id)}
+                  onClick={handleDelete}
                   className="p-2 text-rose-600 hover:bg-rose-100/80 rounded-lg transition-all duration-300 shadow-sm hover:shadow-rose-100"
                   aria-label="حذف"
                 >
