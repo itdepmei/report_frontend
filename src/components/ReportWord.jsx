@@ -353,7 +353,7 @@ const ReportWord = ({ id }) => {
                           alignment: AlignmentType.CENTER,
                           children: [
                             new TextRun({
-                              text: "لايوجد",
+                              text: "لا يوجد",
                               size: 24,
                             }),
                           ],
@@ -411,7 +411,7 @@ const ReportWord = ({ id }) => {
                           alignment: AlignmentType.CENTER,
                           children: [
                             new TextRun({
-                              text: "لايوجد",
+                              text: "لا يوجد",
                               size: 24,
                             }),
                           ],
@@ -469,7 +469,7 @@ const ReportWord = ({ id }) => {
                           alignment: AlignmentType.CENTER,
                           children: [
                             new TextRun({
-                              text: "لايوجد",
+                              text:  "لا يوجد",
                               size: 24,
                             }),
                           ],
@@ -532,7 +532,7 @@ const ReportWord = ({ id }) => {
                               text: 
                                 ((outOfHoursWork[0]?.timeStart && outOfHoursWork[0]?.timeEnd) 
                                   ? (formatTime(outOfHoursWork[0]?.timeStart) + " - " + formatTime(outOfHoursWork[0]?.timeEnd)) 
-                                  : "لايوجد"),
+                                  :  "لا يوجد"),
                               size: 24,
                             }),
                           ],

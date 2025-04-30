@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { useGetDataToken } from "../hooks/useGetData";
 import { useInsertDataWithToken } from "../hooks/useInsertData";
 import { useDeleteData } from "../hooks/useDeleteData";
-import { useUpdateDataWithToken } from "../hooks/useUpdateData"; // ✅ استيراد هوك التحديث (PUT)
+import { useUpdateDataWithToken } from "../hooks/useUpdateData"; 
 
 const initialState = {
   data: [],
@@ -11,7 +11,8 @@ const initialState = {
   singleReport: [],
   createdReport: null,
   sendReport: [],
-  updatedSendReport: null, // 🔥 إضافة حالة لتخزين بيانات تحديث sendToAssistant
+  updatedSendReport: null,
+  reportsByDate: [], // ✅ حقل جديد لحفظ تقارير حسب التاريخ
 };
 
 // Get all reports
@@ -68,6 +69,21 @@ export const sendReportToAssistant = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const { data } = await useUpdateDataWithToken(`/api/v1/reports/${id}/sendToAssistant/`, {});
+      return data.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || error.message
+      );
+    }
+  }
+);
+
+// ✅ Get reports by date
+export const getReportsByDate = createAsyncThunk(
+  "reports/getByDate",
+  async (date, thunkAPI) => {
+    try {
+      const { data } = await useGetDataToken(`/api/v1/reports/?date=${date}`);
       return data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
@@ -150,7 +166,7 @@ const ReportSlice = createSlice({
         state.error = action.payload;
       })
 
-      // Send report to assistant (PUT)
+      // Send report to assistant
       .addCase(sendReportToAssistant.pending, (state) => {
         state.isLoading = true;
       })
@@ -159,6 +175,19 @@ const ReportSlice = createSlice({
         state.updatedSendReport = action.payload;
       })
       .addCase(sendReportToAssistant.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+
+      // ✅ Get reports by date
+      .addCase(getReportsByDate.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getReportsByDate.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.reportsByDate = action.payload;
+      })
+      .addCase(getReportsByDate.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });

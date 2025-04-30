@@ -1,7 +1,7 @@
 import React from "react";
 import { X, Calendar, Clock, AlignLeft, Check } from "lucide-react";
 import AddTaskHook from "../../hook/add-task-hook";
-import { Toaster } from 'react-hot-toast';
+import { Toaster } from "react-hot-toast";
 
 const TasksModal = ({ onClose, id }) => {
   const [
@@ -19,7 +19,6 @@ const TasksModal = ({ onClose, id }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     handleAddTask();
-    
   };
 
   return (
@@ -123,8 +122,7 @@ const TasksModal = ({ onClose, id }) => {
           </div>
         </form>
       </div>
-      <Toaster  />
-
+      <Toaster />
     </div>
   );
 };
