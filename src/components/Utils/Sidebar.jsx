@@ -1,5 +1,5 @@
 import React from "react";
-import { Home, FileText, Send, LogOut } from "lucide-react";
+import { Home, FileText, Send, LogOut, Users } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
@@ -51,6 +51,19 @@ const Sidebar = () => {
               />
               <span className="group-hover:text-blue-700 transition-colors">
                 التقارير المرسلة
+              </span>
+            </li>
+          </Link>
+        )}
+        {user && user.role === "admin" && (
+          <Link to="/allUser">
+            <li className="flex items-center justify-start gap-3 p-2 rounded-lg hover:bg-blue-300/50 transition-all duration-300 cursor-pointer group">
+              <Users
+                className="text-blue-500 group-hover:scale-110 transition-transform"
+                size={20}
+              />
+              <span className="group-hover:text-blue-700 transition-colors">
+                المستخدمين
               </span>
             </li>
           </Link>

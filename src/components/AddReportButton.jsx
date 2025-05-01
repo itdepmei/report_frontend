@@ -7,9 +7,12 @@ import { Toaster } from "react-hot-toast";
 const AddReportButton = () => {
   const dispatch = useDispatch();
 
+  const user = JSON.parse(localStorage.getItem("user"));
+
   const handleAddReport = async () => {
     const newReport = {
       date: new Date().toISOString("ar-EG"),
+      department: user.department
     };
 
     try {

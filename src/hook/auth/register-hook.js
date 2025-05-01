@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../redux/authSlice";
+import notify from "../useNotification";
+
 
 const RegisterHook = () => {
   const dispatch = useDispatch();
@@ -11,6 +13,7 @@ const RegisterHook = () => {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setpasswordConfirm] = useState("");
   const [role, setRole] = useState("user");
+  const [department, setDepartment] = useState();
   const [loading, setLoading] = useState(true);
 
   const onChangeName = (e) => {
@@ -30,8 +33,10 @@ const RegisterHook = () => {
   };
 
   const onChangeRole = (e) => {
-    console.log(e.target.value);
     setRole(e.target.value);
+  };
+  const onChangeDepartment = (e) => {
+    setDepartment(e.target.value);
   };
 
   const validationValues = () => {
@@ -79,6 +84,7 @@ const RegisterHook = () => {
           phone_number: phone,
           password: password,
           passwordConfirm: passwordConfirm,
+          department: department,
           role: role,
         })
       );
@@ -89,8 +95,8 @@ const RegisterHook = () => {
   };
 
   useEffect(() => {
-    if (!loading ) {
-      console.log("تم التسجيل بنجاح", "success");
+    if (!loading) {
+     notify("تم التسجيل بنجاح", "success");
     }
   }, [loading]);
 
@@ -101,6 +107,7 @@ const RegisterHook = () => {
     phone,
     password,
     passwordConfirm,
+    department,
     loading,
     onChangeName,
     onChangeEmail,
@@ -108,6 +115,7 @@ const RegisterHook = () => {
     onChangePassword,
     onChangeConfirmPassword,
     onChangeRole,
+    onChangeDepartment,
     OnSubmit,
   ];
 };
