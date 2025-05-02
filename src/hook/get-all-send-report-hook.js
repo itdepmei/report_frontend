@@ -1,17 +1,20 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { getSendReport } from '../redux/reportsSlice';
+import { getReportsByDate, getSendReport } from '../redux/reportsSlice';
 
-const GetAllSendReportHook = () => {
+const GetAllSendReportHook = (selectedDepartment) => {
     const dispatch = useDispatch();
     useEffect(() => {
-      dispatch(getSendReport());
-    }, []);
+      console.log("Dispatching department:", selectedDepartment);
+
+      dispatch(getReportsByDate({ date: new Date(), department: selectedDepartment }));
+    }, [selectedDepartment]);
   
-    const { sendReport, isLoading } = useSelector((state) => state.reports);
+    const { reportsByDate, isLoading } = useSelector((state) => state.reports);
+    console.log("hook",reportsByDate);
   
   
-    return [sendReport, isLoading];
+    return [reportsByDate, isLoading];
 }
 
 export default GetAllSendReportHook

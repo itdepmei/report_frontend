@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { useGetDataToken } from "../hooks/useGetData";
 import { useInsertDataWithToken } from "../hooks/useInsertData";
 import { useDeleteData } from "../hooks/useDeleteData";
-import { useUpdateDataWithToken } from "../hooks/useUpdateData"; 
+import { useUpdateDataWithToken } from "../hooks/useUpdateData";
 
 const initialState = {
   data: [],
@@ -12,7 +12,7 @@ const initialState = {
   createdReport: null,
   sendReport: [],
   updatedSendReport: null,
-  reportsByDate: [], // ✅ حقل جديد لحفظ تقارير حسب التاريخ
+  reportsByDate: [],
 };
 
 // Get all reports
@@ -20,6 +20,35 @@ export const getAllReports = createAsyncThunk("reports/getAll", async () => {
   const { data } = await useGetDataToken("/api/v1/reports/");
   return data.data;
 });
+
+// Get reports by date and department
+export const getReportsByDate = createAsyncThunk(
+  "reports/getByDate",
+  async (params = {}, thunkAPI) => {
+    try {
+      const { date, department } = params;
+
+      let url = "/api/v1/reports/sendToAssistant/";
+      const queryParams = [];
+
+      if (date) queryParams.push(`date=${date}`);
+      if (department)
+        queryParams.push(`department=${encodeURIComponent(department)}`);
+
+      if (queryParams.length > 0) {
+        url += "?" + queryParams.join("&");
+      }
+
+      const { data } = await useGetDataToken(url);
+      console.log("redux",data);
+      return data.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || error.message
+      );
+    }
+  }
+);
 
 // Get single report
 export const getOneReport = createAsyncThunk("reports/getOne", async (id) => {
@@ -38,7 +67,10 @@ export const createReport = createAsyncThunk(
   "reports/create",
   async (reportData, thunkAPI) => {
     try {
-      const { data } = await useInsertDataWithToken("/api/v1/reports", reportData);
+      const { data } = await useInsertDataWithToken(
+        "/api/v1/reports",
+        reportData
+      );
       return data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
@@ -68,22 +100,10 @@ export const sendReportToAssistant = createAsyncThunk(
   "reports/sendToAssistant",
   async (id, thunkAPI) => {
     try {
-      const { data } = await useUpdateDataWithToken(`/api/v1/reports/${id}/sendToAssistant/`, {});
-      return data.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(
-        error.response?.data?.message || error.message
+      const { data } = await useUpdateDataWithToken(
+        `/api/v1/reports/${id}/sendToAssistant/`,
+        {}
       );
-    }
-  }
-);
-
-// ✅ Get reports by date
-export const getReportsByDate = createAsyncThunk(
-  "reports/getByDate",
-  async (date, thunkAPI) => {
-    try {
-      const { data } = await useGetDataToken(`/api/v1/reports/?date=${date}`);
       return data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
@@ -159,7 +179,9 @@ const ReportSlice = createSlice({
       })
       .addCase(deleteReport.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.data = state.data.filter((report) => report._id !== action.payload);
+        state.data = state.data.filter(
+          (report) => report._id !== action.payload
+        );
       })
       .addCase(deleteReport.rejected, (state, action) => {
         state.isLoading = false;
@@ -179,7 +201,7 @@ const ReportSlice = createSlice({
         state.error = action.payload;
       })
 
-      // ✅ Get reports by date
+      // Get reports by date
       .addCase(getReportsByDate.pending, (state) => {
         state.isLoading = true;
       })

@@ -4,7 +4,6 @@ import { Send, Eye, FileText, Trash2 } from "lucide-react";
 import formatDate from "../hook/UtilsFunctions/FormatDate";
 import { useDispatch } from "react-redux";
 import { sendReportToAssistant } from "../redux/reportsSlice";
-import notify from "../hook/useNotification";
 
 const ReportCard = ({ id, name, date, onDelete }) => {
   const dispatch = useDispatch();
