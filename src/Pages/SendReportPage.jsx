@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // استيراد useNavigate
 import Heading from "../components/Utils/Heading";
 import Loader from "../components/Utils/Loader";
 import Sidebar from "../components/Utils/Sidebar";
@@ -9,8 +10,10 @@ import { Filter } from "lucide-react"; // أيقونة الفلتر من lucide-
 const SendReportPage = () => {
   const [selectedDepartment, setSelectedDepartment] = useState("الكل");
   const [reportsByDate, isLoading] = GetAllSendReportHook(selectedDepartment);
+  const filtterWord = localStorage.setItem("flitterWord", selectedDepartment);
   
   const [showDropdown, setShowDropdown] = useState(false);
+  const navigate = useNavigate(); // استدعاء navigate
 
   const departments = [
     "الكل",
@@ -58,6 +61,14 @@ const SendReportPage = () => {
             </ul>
           )}
         </div>
+
+        {/* زر الانتقال الى صفحة التقارير */}
+        <button
+          onClick={() => navigate(`/departmentReport`)} // التوجيه إلى صفحة departmentReport
+          className="mb-5 px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-700 transition duration-200"
+        >
+          عرض كل التقارير
+        </button>
 
         {/* عرض التقارير */}
         {isLoading ? (

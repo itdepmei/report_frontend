@@ -60,6 +60,8 @@ const ReportWord = ({ id }) => {
                 insideHorizontal: { style: BorderStyle.NONE },
                 insideVertical: { style: BorderStyle.NONE },
               },
+
+              // Headers
               rows: [
                 new TableRow({
                   children: [
@@ -134,7 +136,8 @@ const ReportWord = ({ id }) => {
                 new TextRun({
                   text: "شركة هندسة المارج للصناعات الالكترونية",
                   bold: true,
-                  size: 32,
+                  size: 36,
+                  font: "Calibri",
                   rightToLeft: true,
                 }),
               ],
@@ -147,7 +150,8 @@ const ReportWord = ({ id }) => {
                 new TextRun({
                   text: "استمارة التقرير اليومي",
                   bold: true,
-                  size: 32,
+                  size: 36,
+                  font: "Calibri",
                   rightToLeft: true,
                 }),
               ],
@@ -161,7 +165,8 @@ const ReportWord = ({ id }) => {
                 new TextRun({
                   text: formatDate(singleReport?.date),
                   bold: true,
-                  size: 28,
+                  size: 36,
+                  font: "Calibri",
                   rightToLeft: true,
                 }),
               ],
@@ -173,6 +178,7 @@ const ReportWord = ({ id }) => {
               },
             }),
 
+            // Table
             new Table({
               width: {
                 size: 100,
@@ -200,6 +206,7 @@ const ReportWord = ({ id }) => {
                               text: "الملاحظات",
                               bold: true,
                               size: 24,
+                              font: "Calibri",
                               rightToLeft: true,
                             }),
                           ],
@@ -220,6 +227,7 @@ const ReportWord = ({ id }) => {
                               text: "الوقت",
                               bold: true,
                               size: 24,
+                              font: "Calibri",
                               rightToLeft: true,
                             }),
                           ],
@@ -240,6 +248,7 @@ const ReportWord = ({ id }) => {
                               text: "المهام",
                               bold: true,
                               size: 24,
+                              font: "Calibri",
                               rightToLeft: true,
                             }),
                           ],
@@ -260,6 +269,7 @@ const ReportWord = ({ id }) => {
                               text: "ت",
                               bold: true,
                               size: 24,
+                              font: "Calibri",
                               rightToLeft: true,
                             }),
                           ],
@@ -278,6 +288,7 @@ const ReportWord = ({ id }) => {
                             children: [
                               new TextRun({
                                 text: task.note || "",
+                                font: "Calibri",
                                 size: 24,
                               }),
                             ],
@@ -296,6 +307,7 @@ const ReportWord = ({ id }) => {
                                   " - " +
                                   (formatTime(task.timeEnd) || ""),
                                 size: 24,
+                                font: "Calibri",
                               }),
                             ],
                           }),
@@ -309,6 +321,7 @@ const ReportWord = ({ id }) => {
                               new TextRun({
                                 text: task.title || "",
                                 size: 24,
+                                font: "Calibri",
                               }),
                             ],
                           }),
@@ -323,6 +336,7 @@ const ReportWord = ({ id }) => {
                               new TextRun({
                                 text: String(index + 1),
                                 size: 24,
+                                font: "Calibri",
                               }),
                             ],
                           }),
@@ -341,6 +355,7 @@ const ReportWord = ({ id }) => {
                             new TextRun({
                               text: (suggestion && suggestion[0]?.note) || "",
                               size: 24,
+                              font: "Calibri",
                             }),
                           ],
                         }),
@@ -355,6 +370,7 @@ const ReportWord = ({ id }) => {
                             new TextRun({
                               text: "لا يوجد",
                               size: 24,
+                              font: "Calibri",
                             }),
                           ],
                         }),
@@ -368,6 +384,7 @@ const ReportWord = ({ id }) => {
                             new TextRun({
                               text: "المقترحات التي تخص العمل",
                               size: 24,
+                              font: "Calibri",
                             }),
                           ],
                         }),
@@ -382,6 +399,7 @@ const ReportWord = ({ id }) => {
                             new TextRun({
                               text: String(task.length + 1),
                               size: 24,
+                              font: "Calibri",
                             }),
                           ],
                         }),
@@ -399,6 +417,7 @@ const ReportWord = ({ id }) => {
                             new TextRun({
                               text: (complaint && complaint[0]?.note) || "",
                               size: 24,
+                              font: "Calibri",
                             }),
                           ],
                         }),
@@ -413,6 +432,7 @@ const ReportWord = ({ id }) => {
                             new TextRun({
                               text: "لا يوجد",
                               size: 24,
+                              font: "Calibri",
                             }),
                           ],
                         }),
@@ -426,6 +446,7 @@ const ReportWord = ({ id }) => {
                             new TextRun({
                               text: "الشكاوى",
                               size: 24,
+                              font: "Calibri",
                             }),
                           ],
                         }),
@@ -440,6 +461,7 @@ const ReportWord = ({ id }) => {
                             new TextRun({
                               text: String(task.length + 2),
                               size: 24,
+                              font: "Calibri",
                             }),
                           ],
                         }),
@@ -457,6 +479,7 @@ const ReportWord = ({ id }) => {
                             new TextRun({
                               text: (obstacle && obstacle[0]?.note) || "",
                               size: 24,
+                              font: "Calibri",
                             }),
                           ],
                         }),
@@ -469,8 +492,9 @@ const ReportWord = ({ id }) => {
                           alignment: AlignmentType.CENTER,
                           children: [
                             new TextRun({
-                              text:  "لا يوجد",
+                              text: "لا يوجد",
                               size: 24,
+                              font: "Calibri",
                             }),
                           ],
                         }),
@@ -484,6 +508,7 @@ const ReportWord = ({ id }) => {
                             new TextRun({
                               text: "المعوقات",
                               size: 24,
+                              font: "Calibri",
                             }),
                           ],
                         }),
@@ -498,6 +523,7 @@ const ReportWord = ({ id }) => {
                             new TextRun({
                               text: String(task.length + 3),
                               size: 24,
+                              font: "Calibri",
                             }),
                           ],
                         }),
@@ -517,6 +543,7 @@ const ReportWord = ({ id }) => {
                                 (outOfHoursWork && outOfHoursWork[0]?.note) ||
                                 "",
                               size: 24,
+                              font: "Calibri",
                             }),
                           ],
                         }),
@@ -529,14 +556,17 @@ const ReportWord = ({ id }) => {
                           alignment: AlignmentType.CENTER,
                           children: [
                             new TextRun({
-                              text: 
-                                ((outOfHoursWork[0]?.timeStart && outOfHoursWork[0]?.timeEnd) 
-                                  ? (formatTime(outOfHoursWork[0]?.timeStart) + " - " + formatTime(outOfHoursWork[0]?.timeEnd)) 
-                                  :  "لا يوجد"),
+                              text:
+                                outOfHoursWork[0]?.timeStart &&
+                                outOfHoursWork[0]?.timeEnd
+                                  ? formatTime(outOfHoursWork[0]?.timeStart) +
+                                    " - " +
+                                    formatTime(outOfHoursWork[0]?.timeEnd)
+                                  : "لا يوجد",
                               size: 24,
+                              font: "Calibri",
                             }),
                           ],
-                          
                         }),
                       ],
                     }),
@@ -548,6 +578,7 @@ const ReportWord = ({ id }) => {
                             new TextRun({
                               text: "اعمال منفذة خارج أوقات الدوام الرسمي",
                               size: 24,
+                              font: "Calibri",
                             }),
                           ],
                         }),
@@ -562,6 +593,7 @@ const ReportWord = ({ id }) => {
                             new TextRun({
                               text: String(task.length + 4),
                               size: 24,
+                              font: "Calibri",
                             }),
                           ],
                         }),
@@ -571,7 +603,7 @@ const ReportWord = ({ id }) => {
                 }),
               ],
             }),
-
+            // footer
             new Paragraph({
               alignment: AlignmentType.RIGHT,
               bidirectional: true,
@@ -581,7 +613,8 @@ const ReportWord = ({ id }) => {
                   text: "الاسم: " + singleReport.user.name,
 
                   bold: true,
-                  size: 28,
+                  size: 32,
+                  font: "Calibri",
                 }),
               ],
             }),
@@ -592,7 +625,8 @@ const ReportWord = ({ id }) => {
                 new TextRun({
                   text: "قسم: البرمجيات وتكنلوجيا المعلومات",
                   bold: true,
-                  size: 28,
+                  size: 32,
+                  font: "Calibri",
                 }),
               ],
             }),
@@ -602,8 +636,10 @@ const ReportWord = ({ id }) => {
     });
 
     const blob = await Packer.toBlob(doc);
-    saveAs(blob, `تقرير_يومي_${formatDate(singleReport?.date)}/${user.name}.docx`);
-    
+    saveAs(
+      blob,
+      `تقرير_يومي_${formatDate(singleReport?.date)}/${singleReport?.user.name}.docx`
+    );
   };
 
   return (

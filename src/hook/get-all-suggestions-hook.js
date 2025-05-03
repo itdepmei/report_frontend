@@ -6,11 +6,11 @@ const GetAllSuggestionsHook = (id, refresh) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getSuggestionsFromReport(id));
-  }, [refresh]);
+  }, [id, refresh]);
   const { suggestion, isLoading } = useSelector((state) => state.suggestions);
 
 
-  return [suggestion, isLoading];
+  return [suggestion, isLoading, id];
 }
 
 export default GetAllSuggestionsHook

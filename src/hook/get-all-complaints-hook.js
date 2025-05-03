@@ -7,7 +7,7 @@ const GetAllComplaintsHook = (id, refresh) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getComplaintFromReport(id));
-  }, [refresh]);
+  }, [id, refresh]);
 
   const { complaint, isLoading } = useSelector((state) => state.complaints);
 

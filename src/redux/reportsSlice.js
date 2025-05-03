@@ -40,7 +40,6 @@ export const getReportsByDate = createAsyncThunk(
       }
 
       const { data } = await useGetDataToken(url);
-      console.log("redux",data);
       return data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(

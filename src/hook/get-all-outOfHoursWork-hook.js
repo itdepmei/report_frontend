@@ -6,7 +6,7 @@ const GetAllOutOfHoursWorkHook = (id, refresh) => {
   const dispatch = useDispatch();
     useEffect(() => {
       dispatch(getOutOfHoursWorkFromReport(id));
-    }, [refresh]);
+    }, [id, refresh]);
   
     const { outOfHoursWork, isLoading } = useSelector((state) => state.outOfHoursWork);
 

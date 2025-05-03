@@ -7,7 +7,7 @@ const GetTasksFromReportHook = (id, refresh) => {
 
   useEffect(() => {
     dispatch(getTasksFromReport(id));
-  }, [refresh]);
+  }, [id, refresh]);
   const { task, isLoading } = useSelector((state) => state.tasks);
 
   return [task, isLoading];

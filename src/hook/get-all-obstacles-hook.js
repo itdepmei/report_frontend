@@ -8,7 +8,7 @@ const GetAllObstaclesHook = (id, refresh) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getObstaclesFromReport(id));
-  }, [refresh]);
+  }, [id, refresh]);
 
   const { obstacle, isLoading } = useSelector((state) => state.obstacles);
 
