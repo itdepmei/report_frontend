@@ -11,9 +11,9 @@ const SendReportPage = () => {
   const [selectedDepartment, setSelectedDepartment] = useState("الكل");
   const [reportsByDate, isLoading] = GetAllSendReportHook(selectedDepartment);
   const filtterWord = localStorage.setItem("flitterWord", selectedDepartment);
-  
+
   const [showDropdown, setShowDropdown] = useState(false);
-  const navigate = useNavigate(); // استدعاء navigate
+  const navigate = useNavigate(); 
 
   const departments = [
     "الكل",
@@ -52,7 +52,9 @@ const SendReportPage = () => {
                     setShowDropdown(false);
                   }}
                   className={`cursor-pointer px-4 py-2 rounded-lg hover:bg-blue-100 ${
-                    selectedDepartment === dept ? "bg-blue-200 font-semibold" : ""
+                    selectedDepartment === dept
+                      ? "bg-blue-200 font-semibold"
+                      : ""
                   }`}
                 >
                   {dept}

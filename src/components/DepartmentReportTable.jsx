@@ -16,14 +16,12 @@ const DepartmentReportTable = ({
   date,
   name,
   tasks,
+  suggestions,
+  complaints,
+  Obstacles,
+  outOfHoursWork,
 }) => {
-  const [refresh, setRefresh] = useState(false);
 
-  const [singleReport] = GetOneReportHook(currentReportId);
-  const [suggestion] = GetAllSuggestionsHook(currentReportId, refresh);
-  const [complaint] = GetAllComplaintsHook(currentReportId, refresh);
-  const [obstacle] = GetAllObstaclesHook(currentReportId, refresh);
-  const [outOfHoursWork] = GetAllOutOfHoursWorkHook(currentReportId, refresh);
 
   return (
     <div>
@@ -109,7 +107,7 @@ const DepartmentReportTable = ({
                   لا يوجد
                 </td>
                 <td className="col-span-2 border border-black p-1 text-md text-right break-words min-h-10">
-                  {suggestion && suggestion[0]?.note}
+                {suggestions && suggestions[0]?.note || "لا يوجد"}
                 </td>
               </tr>
               <tr className="grid grid-cols-8">
@@ -123,7 +121,7 @@ const DepartmentReportTable = ({
                   لا يوجد
                 </td>
                 <td className="col-span-2 border border-black p-1 text-md text-right break-words min-h-10 flex items-center justify-center">
-                  {complaint && complaint[0]?.note}
+                  {complaints && complaints[0]?.note || "لا يوجد" }
                 </td>
               </tr>
               <tr className="grid grid-cols-8">
@@ -137,7 +135,7 @@ const DepartmentReportTable = ({
                   لا يوجد
                 </td>
                 <td className="col-span-2 border border-black p-1 text-md text-right break-words min-h-10 flex items-center justify-center">
-                  {obstacle && obstacle[0]?.note}
+                  {Obstacles && Obstacles[0]?.note || "لا يوجد" }
                 </td>
               </tr>
               <tr className="grid grid-cols-8">

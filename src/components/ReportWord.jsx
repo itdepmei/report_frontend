@@ -613,7 +613,7 @@ const ReportWord = ({ id }) => {
                   text: "الاسم: " + singleReport.user.name,
 
                   bold: true,
-                  size: 32,
+                  size: 28,
                   font: "Calibri",
                 }),
               ],
@@ -625,7 +625,7 @@ const ReportWord = ({ id }) => {
                 new TextRun({
                   text: "قسم: البرمجيات وتكنلوجيا المعلومات",
                   bold: true,
-                  size: 32,
+                  size: 28,
                   font: "Calibri",
                 }),
               ],

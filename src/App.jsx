@@ -10,8 +10,7 @@ import Report from "./components/Report";
 import SendReportPage from "./Pages/SendReportPage";
 import UserTablePage from "./Pages/Auth/UserTablePage";
 import DepartmentReportPage from "./Pages/DepartmentReportPage";
-import AllWord from "./Pages/AllWord";
-import DepartmentReportWord from "./components/DepartmentReportWord";
+
 
 const App = () => {
   return (
@@ -29,7 +28,6 @@ const App = () => {
         <Route element={<PrivateRoute allowedRoles={["assistant"]} />}>
           <Route path="/sendReport" element={<SendReportPage />} />
           <Route path="/departmentReport" element={<DepartmentReportPage />} />
-          <Route path="/word" element={<DepartmentReportWord />} />
 
         </Route>
 

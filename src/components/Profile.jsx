@@ -131,7 +131,7 @@ const Profile = () => {
                         <div>
                           <div className="text-xs text-gray-500">القسم</div>
                           <div className="font-medium text-gray-800">
-                            البرمجيات وتكنلوجيا المعلومات
+                            {user.department}
                           </div>
                         </div>
                       </div>

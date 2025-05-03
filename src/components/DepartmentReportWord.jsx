@@ -11,6 +11,8 @@ import {
   AlignmentType,
   BorderStyle,
   TextRun,
+  HeadingLevel,
+  TableOfContents
 } from "docx";
 import { saveAs } from "file-saver";
 import ur from "../assets/urlogo.png";
@@ -38,9 +40,22 @@ const DepartmentReportWord = () => {
     const systemResponse = await fetch(system);
     const systemBuffer = await systemResponse.arrayBuffer();
 
-    // إنشاء مستند وورد جديد
-    const doc = new Document({
-      sections: reportsByDate.map((report, index) => ({
+    // إنشاء أقسام المستند
+    const sections = [
+      // قسم فهرس المحتويات
+      {
+        properties: {
+          rtl: true,
+        },
+        children: [
+          new Paragraph({}), // فقرة فارغة تؤدي إلى صفحة فارغة
+        ],
+      },
+    ];
+
+    // إضافة قسم لكل تقرير
+    reportsByDate.forEach((report, index) => {
+      sections.push({
         properties: {
           rtl: true,
         },
@@ -337,7 +352,11 @@ const DepartmentReportWord = () => {
                         bidirectional: true,
                         children: [
                           new TextRun({
-                            text: "",
+                            text:
+                              Array.isArray(report?.suggestions) &&
+                              report.suggestions.length > 0
+                                ? report.suggestions[0].note || ""
+                                : "",
                             size: 24,
                             font: "Calibri",
                           }),
@@ -400,7 +419,11 @@ const DepartmentReportWord = () => {
                         bidirectional: true,
                         children: [
                           new TextRun({
-                            text: "",
+                            text:
+                              Array.isArray(report?.complaints) &&
+                              report.complaints.length > 0
+                                ? report.complaints[0].note || ""
+                                : "",
                             size: 24,
                             font: "Calibri",
                           }),
@@ -463,7 +486,11 @@ const DepartmentReportWord = () => {
                         bidirectional: true,
                         children: [
                           new TextRun({
-                            text: "",
+                            text:
+                              Array.isArray(report?.Obstacles) &&
+                              report.Obstacles.length > 0
+                                ? report.Obstacles[0].note || ""
+                                : "",
                             size: 24,
                             font: "Calibri",
                           }),
@@ -526,7 +553,11 @@ const DepartmentReportWord = () => {
                         bidirectional: true,
                         children: [
                           new TextRun({
-                            text: "",
+                            text:
+                              Array.isArray(report?.outOfHoursWork) &&
+                              report.outOfHoursWork.length > 0
+                                ? report.outOfHoursWork[0].note || ""
+                                : "",
                             size: 24,
                             font: "Calibri",
                           }),
@@ -541,7 +572,17 @@ const DepartmentReportWord = () => {
                         alignment: AlignmentType.CENTER,
                         children: [
                           new TextRun({
-                            text: "لا يوجد",
+                            text:
+                              Array.isArray(report?.outOfHoursWork) &&
+                              report.outOfHoursWork.length > 0 &&
+                              report.outOfHoursWork[0]?.timeStart &&
+                              report.outOfHoursWork[0]?.timeEnd
+                                ? formatTime(
+                                    report.outOfHoursWork[0].timeStart
+                                  ) +
+                                  " - " +
+                                  formatTime(report.outOfHoursWork[0].timeEnd)
+                                : "لا يوجد",
                             size: 24,
                             font: "Calibri",
                           }),
@@ -586,15 +627,18 @@ const DepartmentReportWord = () => {
           new Paragraph({
             alignment: AlignmentType.RIGHT,
             bidirectional: true,
+            heading: HeadingLevel.HEADING_1, // لإدخاله في الفهرس
             children: [
               new TextRun({
                 text: "الاسم: " + report.user.name,
                 bold: true,
-                size: 32,
+                size: 28,
                 font: "Calibri",
+                color: "000000", // لون الخط أسود
               }),
             ],
           }),
+
           new Paragraph({
             alignment: AlignmentType.RIGHT,
             bidirectional: true,
@@ -602,13 +646,18 @@ const DepartmentReportWord = () => {
               new TextRun({
                 text: "القسم: " + report.department,
                 bold: true,
-                size: 32,
+                size: 28,
                 font: "Calibri",
               }),
             ],
           }),
         ],
-      })),
+      });
+    });
+
+    // إنشاء مستند وورد
+    const doc = new Document({
+      sections: sections
     });
 
     // حفظ الملف وورد
