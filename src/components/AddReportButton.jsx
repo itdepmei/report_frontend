@@ -11,7 +11,7 @@ const AddReportButton = () => {
 
   const handleAddReport = async () => {
     const newReport = {
-      date: new Date().toISOString("ar-EG"),
+      date: new Date(),
       department: user.department
     };
 

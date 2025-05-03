@@ -14,6 +14,7 @@ const SendReportPage = () => {
 
   const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate(); 
+ 
 
   const departments = [
     "الكل",

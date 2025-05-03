@@ -39,38 +39,40 @@ const AllReportPage = () => {
   };
 
   return (
-    <div dir="rtl" className="flex">
+  <div dir="rtl" className="flex min-h-screen">
+    <div className="sticky top-0 self-start h-screen">
       <Sidebar />
-      <div className="flex-1 p-4">
-        <Heading title="قائمة التقارير" subtitle="قائمة التقارير" />
-        <AddReportButton />
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <div dir="rtl" className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {data &&
-              data.map((report) => (
-                <ReportCard
-                  key={report._id}
-                  id={report._id}
-                  name={user.name}
-                  date={report.date}
-                  onDelete={handleDeleteClick}
-                />
-              ))}
-          </div>
-        )}
-      </div>
-
-      {/* المودال يظهر هنا */}
-      {isDeleteModalOpen && (
-        <DeleteModal
-          onCancel={handleCancelDelete}
-          onConfirm={handleDeleteConfirm}
-        />
+    </div>
+    <div className="flex-1 p-4 overflow-y-auto">
+      <Heading title="قائمة التقارير" subtitle="قائمة التقارير" />
+      <AddReportButton />
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <div dir="rtl" className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {data &&
+            data.map((report) => (
+              <ReportCard
+                key={report._id}
+                id={report._id}
+                name={user.name}
+                date={report.date}
+                onDelete={handleDeleteClick}
+              />
+            ))}
+        </div>
       )}
     </div>
-  );
+
+    {isDeleteModalOpen && (
+      <DeleteModal
+        onCancel={handleCancelDelete}
+        onConfirm={handleDeleteConfirm}
+      />
+    )}
+  </div>
+);
+
 };
 
 export default AllReportPage;
