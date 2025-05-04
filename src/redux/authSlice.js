@@ -18,7 +18,7 @@ export const registerUser = createAsyncThunk(
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
-        error.response?.data?.message || error.message
+        error.response?.data || { message: error.message }
       );
     }
   }
@@ -33,11 +33,12 @@ export const loginUser = createAsyncThunk(
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
-        error.response?.data?.message || error.message
+        error.response?.data || { message: error.message }
       );
     }
   }
 );
+
 
 // Get All Users
 export const getAllUsers = createAsyncThunk(

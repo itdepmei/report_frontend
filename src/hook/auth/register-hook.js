@@ -69,7 +69,8 @@ const RegisterHook = () => {
     return true;
   };
 
-  const { user } = useSelector((state) => state.auth);
+  const res = useSelector((state) => state.auth);
+  console.log(res)
 
   const OnSubmit = async () => {
     const isValid = validationValues();
@@ -81,7 +82,7 @@ const RegisterHook = () => {
         registerUser({
           name: name,
           email: email,
-          phone_number: phone,
+          phone: phone,
           password: password,
           passwordConfirm: passwordConfirm,
           department: department,

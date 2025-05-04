@@ -43,6 +43,8 @@ const LoginHook = () => {
     setLoading(false);
   };
 
+  const res = useSelector((state) => state.auth);
+  console.log(res)
   const { user, error } = useSelector((state) => state.auth);
 
   useEffect(() => {
