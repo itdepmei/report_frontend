@@ -28,8 +28,10 @@ const SendReportPage = () => {
   ];
 
   return (
-    <div dir="rtl" className="flex">
+    <div dir="rtl" className="flex min-h-screen">
+    <div className="sticky top-0 self-start h-screen">
       <Sidebar />
+    </div>
       <div className="flex-1 p-4">
         <Heading title="قائمة التقارير المرسلة" subtitle="قائمة التقارير" />
 
@@ -40,7 +42,7 @@ const SendReportPage = () => {
             className="flex items-center gap-2 bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded-xl shadow-sm hover:bg-gray-50 transition duration-200"
           >
             <Filter size={20} />
-            <span>فلترة</span>
+            <span>{selectedDepartment}</span>
           </button>
 
           {showDropdown && (
@@ -70,7 +72,7 @@ const SendReportPage = () => {
           onClick={() => navigate(`/departmentReport`)} // التوجيه إلى صفحة departmentReport
           className="mb-5 px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-700 transition duration-200"
         >
-          عرض كل التقارير
+          تقارير {selectedDepartment}
         </button>
 
         {/* عرض التقارير */}

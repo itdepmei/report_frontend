@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { X, Calendar, Clock, AlignLeft, Check } from "lucide-react";
 import AddTaskHook from "../../hook/add-task-hook";
 import { Toaster } from "react-hot-toast";
+import TimePicker from "react-time-picker";
+import "react-time-picker/dist/TimePicker.css";
+import "react-clock/dist/Clock.css";
 
 const TasksModal = ({ onClose, id }) => {
   const [
@@ -15,6 +18,22 @@ const TasksModal = ({ onClose, id }) => {
     handleNoteChange,
     handleAddTask,
   ] = AddTaskHook(id);
+
+  // استخدام حالة محلية للتعامل مع قيم مكتبة TimePicker
+  const [startTime, setStartTime] = useState(timeStart || "12:00");
+  const [endTime, setEndTime] = useState(timeEnd || "13:00");
+
+  // التعامل مع تغير وقت البدء
+  const onStartTimeChange = (value) => {
+    setStartTime(value);
+    handleTimeStartChange({ target: { value } });
+  };
+
+  // التعامل مع تغير وقت الانتهاء
+  const onEndTimeChange = (value) => {
+    setEndTime(value);
+    handleTimeEndChange({ target: { value } });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -62,14 +81,16 @@ const TasksModal = ({ onClose, id }) => {
                 <Clock size={16} className="ml-2 text-blue-500" />
                 <span>وقت البدء</span>
               </label>
-              <input
-                type="time"
-                name="timeStart"
-                value={timeStart}
-                onChange={handleTimeStartChange}
-                className="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors shadow-sm"
-                dir="rtl"
-              />
+              <div className="relative time-picker-container" dir="ltr">
+                <TimePicker
+                  onChange={onStartTimeChange}
+                  value={startTime}
+                  format="HH:mm"
+                  clearIcon={null}
+                  disableClock
+                  className="w-full border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors shadow-sm"
+                />
+              </div>
             </div>
 
             <div className="space-y-2">
@@ -77,14 +98,16 @@ const TasksModal = ({ onClose, id }) => {
                 <Clock size={16} className="ml-2 text-blue-500" />
                 <span>وقت الانتهاء</span>
               </label>
-              <input
-                type="time"
-                name="timeEnd"
-                value={timeEnd}
-                onChange={handleTimeEndChange}
-                className="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors shadow-sm"
-                dir="rtl"
-              />
+              <div className="relative time-picker-container" dir="ltr">
+                <TimePicker
+                  onChange={onEndTimeChange}
+                  value={endTime}
+                  format="HH:mm"
+                  clearIcon={null}
+                  disableClock
+                  className="w-full border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors shadow-sm"
+                />
+              </div>
             </div>
           </div>
 
@@ -122,6 +145,52 @@ const TasksModal = ({ onClose, id }) => {
           </div>
         </form>
       </div>
+
+      {/* إضافة CSS لتحسين مظهر منتقي الوقت */}
+      <style jsx>{`
+        .time-picker-container .react-time-picker {
+          width: 100%;
+        }
+        
+        .time-picker-container .react-time-picker__wrapper {
+          border: none;
+          padding: 8px;
+          display: flex;
+          align-items: center;
+          height: 52px;
+        }
+        
+        .time-picker-container .react-time-picker__inputGroup {
+          font-size: 16px;
+          text-align: center;
+          width: 100%;
+        }
+        
+        /* تحسين شكل الأزرار */
+        .time-picker-container .react-time-picker__button {
+          color: #3b82f6;
+          padding: 4px;
+        }
+        
+        .time-picker-container .react-time-picker__button:hover {
+          background-color: rgba(59, 130, 246, 0.1);
+          border-radius: 4px;
+        }
+        
+        /* تحسين مظهر الحقول في الوضع المظلم */
+        .dark .time-picker-container .react-time-picker__wrapper {
+          color: white;
+        }
+        
+        .dark .time-picker-container .react-time-picker__button {
+          stroke: #e5e7eb;
+        }
+        
+        .dark .time-picker-container .react-time-picker__button:hover {
+          background-color: rgba(229, 231, 235, 0.1);
+        }
+      `}</style>
+      
       <Toaster />
     </div>
   );
