@@ -24,9 +24,9 @@ const DepartmentReportTable = ({
 
 
   return (
-    <div>
+    <div className="mb-12">
       <div
-        className="w-[297mm] h-[210mm] bg-white p-2 mx-auto font-sans text-sm relative"
+        className="w-[297mm] h-auto bg-white p-2 mx-auto font-sans text-sm relative"
         dir="rtl"
       >
         {/* Header */}

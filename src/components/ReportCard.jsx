@@ -1,20 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Send, Eye, FileText, Trash2 } from "lucide-react";
+import { Send, Eye, FileText, Trash2, CheckCircle } from "lucide-react";
 import formatDate from "../hook/UtilsFunctions/FormatDate";
 import { useDispatch } from "react-redux";
 import { sendReportToAssistant } from "../redux/reportsSlice";
+import notify from "../hook/useNotification";
 
-const ReportCard = ({ id, name, date, onDelete }) => {
+const ReportCard = ({ id, name, date, onDelete,onSend, send }) => {
   const dispatch = useDispatch();
 
   const handleSendClick = () => {
-    dispatch(sendReportToAssistant(id));
+    onSend(id)
   };
 
   const handleDelete = () => {
-    onDelete(id)
-  }
+    onDelete(id);
+  };
 
   return (
     <div>
@@ -37,14 +38,24 @@ const ReportCard = ({ id, name, date, onDelete }) => {
                 >
                   <Trash2 className="w-5 h-5" />
                 </button>
-                <button
-                  onClick={handleSendClick}
-                  className="p-2 text-indigo-600 hover:bg-indigo-100/80 rounded-lg transition-all duration-300 shadow-sm hover:shadow-indigo-100"
-                  aria-label="إرسال"
-                  title="إرسال التقرير"
-                >
-                  <Send className="w-5 h-5" />
-                </button>
+
+                {!send ? (
+                  <button
+                    onClick={handleSendClick}
+                    className="p-2 text-indigo-600 hover:bg-indigo-100/80 rounded-lg transition-all duration-300 shadow-sm hover:shadow-indigo-100"
+                    aria-label="إرسال"
+                    title="إرسال التقرير"
+                  >
+                    <Send className="w-5 h-5" />
+                  </button>
+                ) : (
+                  <div
+                    className="p-2 text-green-600 bg-green-50 rounded-lg transition-all duration-300 shadow-sm cursor-default"
+                    title="تم الإرسال"
+                  >
+                    <CheckCircle className="w-5 h-5" />
+                  </div>
+                )}
               </div>
             </div>
 

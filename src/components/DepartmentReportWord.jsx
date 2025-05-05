@@ -17,13 +17,7 @@ import {
 import { saveAs } from "file-saver";
 import ur from "../assets/urlogo.png";
 import system from "../assets/systemslogo.jpg";
-import GetOneReportHook from "../hook/get-one_report-hook";
-import GetTasksFromReportHook from "../hook/get-tasks-from-report-hook";
 import formatDate from "../hook/UtilsFunctions/FormatDate";
-import GetAllSuggestionsHook from "../hook/get-all-suggestions-hook";
-import GetAllComplaintsHook from "../hook/get-all-complaints-hook";
-import GetAllObstaclesHook from "../hook/get-all-obstacles-hook";
-import GetAllOutOfHoursWorkHook from "../hook/get-all-outOfHoursWork-hook";
 import formatTime from "../hook/UtilsFunctions/FormatTime";
 import GetAllSendReportHook from "../hook/get-all-send-report-hook";
 
@@ -40,17 +34,15 @@ const DepartmentReportWord = () => {
     const systemResponse = await fetch(system);
     const systemBuffer = await systemResponse.arrayBuffer();
 
-    // إنشاء أقسام المستند
     const sections = [
-      // قسم فهرس المحتويات
-      {
-        properties: {
-          rtl: true,
-        },
-        children: [
-          new Paragraph({}), // فقرة فارغة تؤدي إلى صفحة فارغة
-        ],
-      },
+      // {
+      //   properties: {
+      //     rtl: true,
+      //   },
+      //   children: [
+      //     new Paragraph({}), 
+      //   ],
+      // },
     ];
 
     // إضافة قسم لكل تقرير
@@ -60,7 +52,6 @@ const DepartmentReportWord = () => {
           rtl: true,
         },
         children: [
-          // إضافة شعار النظام
           new Table({
             width: {
               size: 100,
@@ -135,7 +126,6 @@ const DepartmentReportWord = () => {
             ],
           }),
 
-          // إضافة عنوان التقرير
           new Paragraph({
             alignment: AlignmentType.CENTER,
             bidirectional: true,
@@ -178,7 +168,6 @@ const DepartmentReportWord = () => {
             ],
           }),
 
-          // إضافة جدول المهام
           new Table({
             width: {
               size: 100,
@@ -627,14 +616,14 @@ const DepartmentReportWord = () => {
           new Paragraph({
             alignment: AlignmentType.RIGHT,
             bidirectional: true,
-            heading: HeadingLevel.HEADING_1, // لإدخاله في الفهرس
+            heading: HeadingLevel.HEADING_1,
             children: [
               new TextRun({
                 text: "الاسم: " + report.user.name,
                 bold: true,
                 size: 28,
                 font: "Calibri",
-                color: "000000", // لون الخط أسود
+                color: "000000", 
               }),
             ],
           }),
@@ -655,14 +644,13 @@ const DepartmentReportWord = () => {
       });
     });
 
-    // إنشاء مستند وورد
     const doc = new Document({
       sections: sections
     });
 
     // حفظ الملف وورد
     const blob = await Packer.toBlob(doc);
-    saveAs(blob, `تقارير_يومية_${user.name}.docx`);
+    saveAs(blob, `${flitterWord}.docx`);
   };
 
   return (

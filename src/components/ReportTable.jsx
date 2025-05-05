@@ -37,7 +37,7 @@ const ReportTable = ({
   return (
     <div>
       <div
-        className="w-[297mm] h-[210mm] bg-white p-2 mx-auto font-sans text-sm relative"
+        className="w-[297mm] h-[210mm] bg-white p-2 mx-auto font-sans text-sm relative mt-4"
         dir="rtl"
       >
         {/* Header */}
