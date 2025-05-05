@@ -20,6 +20,7 @@ const Report = () => {
   const dispatch = useDispatch();
 
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+  const [isUpdateTaskModalOpen, setIsUpdateTaskModalOpen] = useState(false);
   const [isSuggestionsModalOpen, setIsSuggestionsModalOpen] = useState(false);
   const [isComplaintModalOpen, setIsComplaintModalOpen] = useState(false);
   const [isObstacleModalOpen, setIsObstacleModalOpen] = useState(false);
@@ -38,6 +39,9 @@ const Report = () => {
 
   const handleOpenTaskModal = () => {
     setIsTaskModalOpen(!isTaskModalOpen);
+  };
+  const handleOpenUpdateTaskModal = () => {
+    setIsUpdateTaskModalOpen(!isUpdateTaskModalOpen);
   };
 
   const handleOpenSuggestionsModal = () => {
@@ -110,6 +114,8 @@ const Report = () => {
           handleDeleteObstacle={handleDeleteObstacle}
           handleDeleteOutOfHoursWork={handleDeleteOutOfHoursWork}
           id={id}
+          isUpdateTaskModalOpen={isUpdateTaskModalOpen}
+          handleOpenUpdateTaskModal={handleOpenUpdateTaskModal}
         />
       </div>
     </div>

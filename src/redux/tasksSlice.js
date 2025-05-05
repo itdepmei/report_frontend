@@ -2,33 +2,40 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { useGetData } from "../hooks/useGetData";
 import { useDeleteData } from "../hooks/useDeleteData";
 import { useInsertData } from "../hooks/useInsertData";
-import { useUpdateData } from "../hooks/useUpdateData"; // أضفناها هنا
+import { useUpdateData } from "../hooks/useUpdateData";
 
 const initialState = {
   task: [],
+  singleTask: null, // ✅ أضفناها لتخزين تاسك واحدة
   isLoading: false,
   error: null,
 };
 
-// جلب المهام
+// ✅ جلب جميع المهام لتقرير
 export const getTasksFromReport = createAsyncThunk("tasks/get", async (id) => {
   const { data } = await useGetData(`/api/v1/reports/${id}/tasks/`);
   return data.data;
 });
 
-// حذف مهمة
+// ✅ جلب مهمة واحدة
+export const getOneTask = createAsyncThunk("tasks/getOne", async (id) => {
+  const { data } = await useGetData(`/api/v1/tasks/${id}/`);
+  return data.data;
+});
+
+// ✅ حذف مهمة
 export const deleteTask = createAsyncThunk("tasks/delete", async (id) => {
   await useDeleteData(`/api/v1/tasks/${id}/`);
   return id;
 });
 
-// إضافة مهمة
+// ✅ إضافة مهمة
 export const addTask = createAsyncThunk("tasks/add", async ({ reportId, taskData }) => {
   const { data } = await useInsertData(`/api/v1/reports/${reportId}/tasks/`, taskData);
   return data.data;
 });
 
-// تحديث مهمة
+// ✅ تحديث مهمة
 export const updateTask = createAsyncThunk("tasks/update", async ({ id, updatedData }) => {
   const { data } = await useUpdateData(`/api/v1/tasks/${id}/`, updatedData);
   return data.data;
@@ -39,7 +46,7 @@ const tasksSlice = createSlice({
   initialState,
   extraReducers: (builder) => {
     builder
-      // get
+      // ✅ get all
       .addCase(getTasksFromReport.pending, (state) => {
         state.isLoading = true;
       })
@@ -52,7 +59,20 @@ const tasksSlice = createSlice({
         state.error = action.error.message;
       })
 
-      // delete
+      // ✅ get one
+      .addCase(getOneTask.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getOneTask.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.singleTask = action.payload;
+      })
+      .addCase(getOneTask.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      })
+
+      // ✅ delete
       .addCase(deleteTask.pending, (state) => {
         state.isLoading = true;
       })
@@ -65,7 +85,7 @@ const tasksSlice = createSlice({
         state.error = action.error.message;
       })
 
-      // add
+      // ✅ add
       .addCase(addTask.pending, (state) => {
         state.isLoading = true;
       })
@@ -78,7 +98,7 @@ const tasksSlice = createSlice({
         state.error = action.error.message;
       })
 
-      // update
+      // ✅ update
       .addCase(updateTask.pending, (state) => {
         state.isLoading = true;
       })

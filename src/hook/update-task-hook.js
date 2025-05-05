@@ -1,30 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { updateTask } from "../redux/tasksSlice";
+import GetOneTaskHook from "./get-one-task-hook";
 
-const UpdateTaskHook = (reportId) => {
+const UpdateTaskHook = (id) => {
   const dispatch = useDispatch();
+  const [singleTask, isLoading] = GetOneTaskHook(id);
 
   const [newTaskTitle, setTaskTitle] = useState("");
   const [newTimeStart, setTimeStart] = useState("");
   const [newTimeEnd, setTimeEnd] = useState("");
   const [newNote, setNote] = useState("");
 
-  const handleTaskTitleUpdate = (event) => {
-    setTaskTitle(event.target.value);
-  };
+  useEffect(() => {
+    if (singleTask) {
+      setTaskTitle(singleTask.title || "");
+      setTimeStart(singleTask.timeStart || "");
+      setTimeEnd(singleTask.timeEnd || "");
+      setNote(singleTask.note || "");
+    }
+  }, [singleTask]);
 
-  const handleTimeStartUpdate = (event) => {
-    setTimeStart(event.target.value);
-  };
-
-  const handleTimeEndUpdate = (event) => {
-    setTimeEnd(event.target.value);
-  };
-
-  const handleNoteUpdate = (event) => {
-    setNote(event.target.value);
-  };
+  const handleTaskTitleUpdate = (event) => setTaskTitle(event.target.value);
+  const handleTimeStartUpdate = (event) => setTimeStart(event.target.value);
+  const handleTimeEndUpdate = (event) => setTimeEnd(event.target.value);
+  const handleNoteUpdate = (event) => setNote(event.target.value);
 
   const handleUpdateTask = () => {
     const newTask = {
@@ -32,10 +32,8 @@ const UpdateTaskHook = (reportId) => {
       timeStart: newTimeStart,
       timeEnd: newTimeEnd,
       note: newNote,
-      report: reportId,
     };
-
-    dispatch(updateTask({ reportId, updatedData: newTask }));
+    dispatch(updateTask({ id, updatedData: newTask }));
   };
 
   return [

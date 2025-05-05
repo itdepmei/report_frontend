@@ -31,7 +31,6 @@ export const deleteSuggestion = createAsyncThunk(
 export const addSuggestion = createAsyncThunk(
   "suggestions/create",
   async ({ reportId, suggestionData }) => {
-    console.log(reportId, suggestionData);
     const { data } = await useInsertData(`/api/v1/reports/${reportId}/suggestions/`, suggestionData);
     return data.data;
   }

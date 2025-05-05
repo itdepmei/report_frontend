@@ -36,7 +36,7 @@ const Register = ({open, close}) => {
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      console.log("Enter key pressed");
+      OnSubmit();
     }
   };
 

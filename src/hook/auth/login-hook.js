@@ -44,16 +44,17 @@ const LoginHook = () => {
   };
 
   const res = useSelector((state) => state.auth);
-  console.log(res)
-  const { user, error } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (!loading && loginClicked) {
-      if (error && (error === "Request failed with status code 400" || error === "Incorrect email or password")) {
-        notify("البريد الإلكتروني أو كلمة السر غير صحيحة", "error");
-        return;
+      if (res && res.error) {
+        if (res.error.message === "Incorrect email or password") {
+          notify("البريد الألكتروني او كلمة المرور غير صحيحة", "error");
+        } else{
+          notify("تأكد من اتصالك بالانترنيت", "error");
+        }
       }
-      
 
       if (user) {
         if (user.data) {
@@ -76,16 +77,9 @@ const LoginHook = () => {
         }
       }
     }
-  }, [loading, user, loginClicked, error]);
+  }, [loading, user, loginClicked]);
 
-  return [
-    email,
-    password,
-    loading,
-    onChangeEmail,
-    onChangePassword,
-    onSubmit,
-  ];
+  return [email, password, loading, onChangeEmail, onChangePassword, onSubmit];
 };
 
 export default LoginHook;

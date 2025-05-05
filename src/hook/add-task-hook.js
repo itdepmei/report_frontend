@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { addTask, updateTask } from "../redux/tasksSlice";
+import { addTask } from "../redux/tasksSlice";
 import { useDispatch } from "react-redux";
 import notify from "./useNotification";
 
@@ -28,7 +28,7 @@ const AddTaskHook = (reportId) => {
   };
 
   const handleAddTask = () => {
-    if (!taskTitle || !timeStart || !timeEnd ) {
+    if (!taskTitle || !timeStart || !timeEnd) {
       notify("يرجى ملء جميع الحقول قبل إضافة المهمة", "error");
       return;
     }
@@ -37,10 +37,9 @@ const AddTaskHook = (reportId) => {
       title: taskTitle,
       timeStart: timeStart,
       timeEnd: timeEnd,
-      note: note || "لا يوجد",  
+      note: note || "لا يوجد",
       report: reportId,
     };
-    
 
     dispatch(addTask({ reportId, taskData: newTask }));
     notify("تم إضافة المهمة بنجاح", "success");
@@ -49,24 +48,6 @@ const AddTaskHook = (reportId) => {
     setTimeStart("");
     setTimeEnd("");
     setNote("");
-  };
-
-  const handleUpdateTask = () => {
-    if (!taskTitle || !timeStart || !timeEnd) {
-      notify("يرجى ملء جميع الحقول قبل تحديث المهمة", "error");
-      return;
-    }
-
-    const newTask = {
-      title: taskTitle,
-      timeStart: timeStart,
-      timeEnd: timeEnd,
-      note: note,
-      report: reportId,
-    };
-
-    dispatch(updateTask({ reportId, updatedData: newTask }));
-    notify("تم تحديث المهمة بنجاح", "success");
   };
 
   return [
@@ -79,7 +60,6 @@ const AddTaskHook = (reportId) => {
     handleTimeEndChange,
     handleNoteChange,
     handleAddTask,
-    handleUpdateTask
   ];
 };
 

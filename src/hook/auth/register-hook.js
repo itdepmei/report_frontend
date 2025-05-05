@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../redux/authSlice";
 import notify from "../useNotification";
 
-
 const RegisterHook = () => {
   const dispatch = useDispatch();
 
@@ -43,34 +42,34 @@ const RegisterHook = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (name === "") {
-      console.log("من فضلك ادخل اسم المستخدم", "error");
+      notify("من فضلك ادخل اسم المستخدم", "error");
       return false;
     }
     if (email === "") {
-      console.log("من فضلك ادخل الايميل", "error");
+      notify("من فضلك ادخل الايميل", "error");
       return false;
     }
     if (password === "") {
-      console.log("من فضلك ادخل كلمة السر", "error");
+      notify("من فضلك ادخل كلمة السر", "error");
       return false;
     }
     if (!emailRegex.test(email)) {
-      console.log("من فضلك ادخل ايميل صحيح", "error");
+      notify("من فضلك ادخل ايميل صحيح", "error");
       return false;
     }
     if (phone.length <= 10) {
-      console.log("من فضلك ادخل رقم هاتف صحيح", "error");
+      notify("من فضلك ادخل رقم هاتف صحيح", "error");
       return false;
     }
     if (password !== passwordConfirm) {
-      console.log("من فضلك تاكد من كلمه السر", "error");
+      notify("من فضلك تاكد من كلمه السر", "error");
       return false;
     }
     return true;
   };
 
-  const res = useSelector((state) => state.auth);
-  console.log(res)
+  // const res = useSelector((state) => state.auth);
+  const { user, error } = useSelector((state) => state.auth);
 
   const OnSubmit = async () => {
     const isValid = validationValues();
@@ -90,14 +89,29 @@ const RegisterHook = () => {
         })
       );
     } catch (error) {
-      console.log("حدث خطأ أثناء التسجيل. يرجى المحاولة مرة أخرى", "error");
+      notify("حدث خطأ أثناء التسجيل. يرجى المحاولة مرة أخرى", "error");
     }
     setLoading(false);
   };
 
   useEffect(() => {
     if (!loading) {
-     notify("تم التسجيل بنجاح", "success");
+      if (error) {
+        if (error.errors && Array.isArray(error.errors)) {
+          error.errors.forEach((err) => {
+            if (err.msg === "Email already exists") {
+              notify("البريد الإلكتروني مستخدم من قبل", "error");
+            } else {
+              notify(err.msg, "error");
+            }
+          });
+        } else if (typeof error === "string") {
+          notify(error, "error");
+        }
+        return;
+      }
+
+      notify("تم التسجيل بنجاح", "success");
     }
   }, [loading]);
 

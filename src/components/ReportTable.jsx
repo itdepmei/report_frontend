@@ -9,6 +9,8 @@ import ComplaintModal from "./modal/ComplaintModal";
 import ObstacleModal from "./modal/ObstacleModal";
 import OutOfHoursWorkModal from "./modal/OutOfHoursWorkModal";
 import formatTime from "../hook/UtilsFunctions/FormatTime";
+import { useState } from "react";
+import UpdateTasksModal from "./modal/UpdateTasksModal";
 const ReportTable = ({
   singleReport,
   task,
@@ -31,9 +33,20 @@ const ReportTable = ({
   handleDeleteComplaint,
   handleDeleteObstacle,
   handleDeleteOutOfHoursWork,
-  id
-
+  id,
 }) => {
+  const [clickedTask, setClickedTask] = useState(null);
+  const [isUpdateTaskModalOpen, setIsUpdateTaskModalOpen] = useState(false);
+
+  const handleClickEdit = (taskId) => {
+    setClickedTask(taskId);
+     setIsUpdateTaskModalOpen(true); // فتح المودال فورًا بعد تعيين الـ ID
+  };
+
+  const handleCloseUpdateTaskModal = () => {
+    setIsUpdateTaskModalOpen(false);
+    setClickedTask(null);
+  };
   return (
     <div>
       <div
@@ -123,6 +136,7 @@ const ReportTable = ({
                         <button
                           className="p-2 text-emerald-600 hover:text-emerald-800"
                           aria-label="تعديل"
+                          onClick={() => handleClickEdit(taskItem._id)}
                         >
                           <Pencil className="w-5 h-5" />
                         </button>
@@ -336,6 +350,12 @@ const ReportTable = ({
         </div>
       </div>
       {isTaskModalOpen && <TasksModal onClose={handleOpenTaskModal} id={id} />}
+      {isUpdateTaskModalOpen && clickedTask && (
+        <UpdateTasksModal
+          onClose={handleCloseUpdateTaskModal}
+          id={clickedTask}
+        />
+      )}
       {isSuggestionsModalOpen && (
         <SuggestionsModal onClose={handleOpenSuggestionsModal} id={id} />
       )}
