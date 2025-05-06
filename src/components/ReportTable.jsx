@@ -40,7 +40,7 @@ const ReportTable = ({
 
   const handleClickEdit = (taskId) => {
     setClickedTask(taskId);
-     setIsUpdateTaskModalOpen(true); // فتح المودال فورًا بعد تعيين الـ ID
+     setIsUpdateTaskModalOpen(true); 
   };
 
   const handleCloseUpdateTaskModal = () => {
