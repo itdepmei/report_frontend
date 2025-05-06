@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { useGetDataToken } from "../hooks/useGetData";
 import { useInsertDataWithToken } from "../hooks/useInsertData";
-import { useDeleteData } from "../hooks/useDeleteData";
+import { useDeleteData, useDeleteDataWithToken } from "../hooks/useDeleteData";
 import { useUpdateDataWithToken } from "../hooks/useUpdateData";
 
 const initialState = {
@@ -84,7 +84,7 @@ export const deleteReport = createAsyncThunk(
   "reports/delete",
   async (id, thunkAPI) => {
     try {
-      await useDeleteData(`/api/v1/reports/${id}`);
+      await useDeleteDataWithToken(`/api/v1/reports/${id}`);
       return id;
     } catch (error) {
       return thunkAPI.rejectWithValue(
