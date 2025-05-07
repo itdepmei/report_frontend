@@ -12,7 +12,7 @@ const AddReportButton = () => {
   const handleAddReport = async () => {
     const newReport = {
       date: new Date(),
-      department: user.department
+      department: user.department,
     };
 
     try {
@@ -33,8 +33,7 @@ const AddReportButton = () => {
         <span className="text-md">إضافة تقرير</span>
         <Plus size={22} />
       </button>
-      <Toaster  />
-
+      <Toaster />
     </div>
   );
 };

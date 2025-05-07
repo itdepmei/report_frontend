@@ -10,6 +10,7 @@ import Report from "./components/Report";
 import SendReportPage from "./Pages/SendReportPage";
 import UserTablePage from "./Pages/Auth/UserTablePage";
 import DepartmentReportPage from "./Pages/DepartmentReportPage";
+import Logs from "./Pages/LogsPage";
 
 
 const App = () => {
@@ -34,6 +35,7 @@ const App = () => {
         <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
           <Route path="/register" element={<Register />} />
           <Route path="/allUser" element={<UserTablePage />} />
+          <Route path="/log" element={<Logs />} />
         </Route>
       </Routes>
     </BrowserRouter>
