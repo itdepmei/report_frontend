@@ -46,38 +46,44 @@ const LoginHook = () => {
   const res = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.auth);
 
+  console.log(res)
+
   useEffect(() => {
-    if (!loading && loginClicked) {
-      if (res && res.error) {
-        if (res.error.message === "Incorrect email or password") {
-          notify("البريد الألكتروني او كلمة المرور غير صحيحة", "error");
-        } else{
-          notify("تأكد من اتصالك بالانترنيت", "error");
-        }
+  if (!loading && loginClicked) {
+    if (res && res.error) {
+      // في حالة وجود خطأ في الـ state
+      if (res.error.message === "Incorrect email or password") {
+        notify("البريد الألكتروني او كلمة المرور غير صحيحة", "error");
+      } else {
+        notify("حدث خطأ", "error");
       }
-
-      if (user) {
-        if (user.data) {
-          if (user.data.error) {
-            notify(user.data.error, "error");
-            localStorage.removeItem("token");
-            localStorage.removeItem("user");
-            return;
-          }
-
-          localStorage.setItem("token", user.token);
-          localStorage.setItem("user", JSON.stringify(user.data));
-          notify("تم تسجيل الدخول بنجاح", "success");
-          setTimeout(() => {
-            navigate("/");
-          }, 1000);
-        } else {
-          localStorage.removeItem("token");
-          localStorage.removeItem("user");
-        }
-      }
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      return;
     }
-  }, [loading, user, loginClicked]);
+
+    if (user && user.token) {
+      // تسجيل الدخول ناجح فقط إذا كان هناك توكن
+      localStorage.setItem("token", user.token);
+      localStorage.setItem("user", JSON.stringify(user.data));
+      notify("تم تسجيل الدخول بنجاح", "success");
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
+    } else if (user && user.data && user.data.error) {
+      // هنا إذا كان هناك خطأ ضمن بيانات المستخدم
+      notify(user.data.error, "error");
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+    } else {
+      // أي حالة أخرى
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+    }
+  }
+}, [loading, user, loginClicked]);
+
+
 
   return [email, password, loading, onChangeEmail, onChangePassword, onSubmit];
 };

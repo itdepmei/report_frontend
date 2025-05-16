@@ -11,6 +11,8 @@ import SendReportPage from "./Pages/SendReportPage";
 import UserTablePage from "./Pages/Auth/UserTablePage";
 import DepartmentReportPage from "./Pages/DepartmentReportPage";
 import Logs from "./Pages/LogsPage";
+import ChangePassword from "./Pages/Auth/ChangePassword";
+import ForgotPasswordPage from "./Pages/Auth/ForgetPassword";
 
 
 const App = () => {
@@ -19,9 +21,11 @@ const App = () => {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/forgotPassword" element={<ForgotPasswordPage />} />
 
         <Route element={<PrivateRoute />}>
           <Route path="/profile" element={<Profile />} />
+          <Route path="/changePassword" element={<ChangePassword />} />
           <Route path="/report" element={<AllReportPage />} />
           <Route path="/report/:id" element={<Report />} />
         </Route>

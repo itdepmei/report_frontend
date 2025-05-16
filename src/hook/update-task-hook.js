@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { updateTask } from "../redux/tasksSlice";
+import { getTasksFromReport, updateTask } from "../redux/tasksSlice";
 import GetOneTaskHook from "./get-one-task-hook";
 
-const UpdateTaskHook = (id) => {
+const UpdateTaskHook = (id, reportId) => {
   const dispatch = useDispatch();
   const [singleTask, isLoading] = GetOneTaskHook(id);
 
@@ -26,14 +26,17 @@ const UpdateTaskHook = (id) => {
   const handleTimeEndUpdate = (event) => setTimeEnd(event.target.value);
   const handleNoteUpdate = (event) => setNote(event.target.value);
 
-  const handleUpdateTask = () => {
+  const handleUpdateTask = async () => {
     const newTask = {
       title: newTaskTitle,
       timeStart: newTimeStart,
       timeEnd: newTimeEnd,
       note: newNote,
     };
-    dispatch(updateTask({ id, updatedData: newTask }));
+    await dispatch(updateTask({ id, updatedData: newTask }));
+
+    await dispatch(getTasksFromReport(reportId));
+
   };
 
   return [

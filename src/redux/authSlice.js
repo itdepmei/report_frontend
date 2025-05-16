@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { useInsertData } from "../hooks/useInsertData";
-import { useGetData, useGetDataToken } from "../hooks/useGetData";
+import { useGetDataToken } from "../hooks/useGetData";
+import { useDeleteDataWithToken } from "../hooks/useDeleteData";
+import { useUpdateDataWithToken } from "../hooks/useUpdateData";
 
 const initialState = {
   user: [],
@@ -39,14 +41,43 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-
 // Get All Users
 export const getAllUsers = createAsyncThunk(
   "auth/getAllUsers",
   async (_, thunkAPI) => {
     try {
       const { data } = await useGetDataToken("/api/v1/users/getAllUser");
-      return data?.data
+      return data?.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || error.message
+      );
+    }
+  }
+);
+
+// Delete User
+export const deleteUser = createAsyncThunk(
+  "auth/deleteUser",
+  async (userId, thunkAPI) => {
+    try {
+      const { data } = await useDeleteDataWithToken(`/api/v1/users/${userId}`, null, "DELETE");
+      return { userId, message: data?.message || "User deleted successfully" };
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || error.message
+      );
+    }
+  }
+);
+
+// Change My Password
+export const changeMyPassword = createAsyncThunk(
+  "auth/changeMyPassword",
+  async (passwordData, thunkAPI) => {
+    try {
+      const { data } = await useUpdateDataWithToken("/api/v1/users/changeMyPassword", passwordData);
+      return data?.message || "Password changed successfully";
     } catch (error) {
       return thunkAPI.rejectWithValue(
         error.response?.data?.message || error.message
@@ -58,7 +89,6 @@ export const getAllUsers = createAsyncThunk(
 const authSlice = createSlice({
   name: "authSlice",
   initialState,
-
   extraReducers: (builder) => {
     builder
       // Register
@@ -99,6 +129,37 @@ const authSlice = createSlice({
         state.allUsers = action.payload;
       })
       .addCase(getAllUsers.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+
+      // Delete User
+      .addCase(deleteUser.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(deleteUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.allUsers = state.allUsers.filter(
+          (user) => user._id !== action.payload.userId
+        );
+      })
+      .addCase(deleteUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+
+      // Change My Password
+      .addCase(changeMyPassword.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(changeMyPassword.fulfilled, (state, action) => {
+        state.isLoading = false;
+        // state.user = action.payload;
+        state.error = null;
+      })
+      .addCase(changeMyPassword.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });

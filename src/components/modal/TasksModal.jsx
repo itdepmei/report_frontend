@@ -20,8 +20,8 @@ const TasksModal = ({ onClose, id }) => {
   ] = AddTaskHook(id);
 
   // استخدام حالة محلية للتعامل مع قيم مكتبة TimePicker
-  const [startTime, setStartTime] = useState(timeStart || "12:00");
-  const [endTime, setEndTime] = useState(timeEnd || "13:00");
+  const [startTime, setStartTime] = useState(timeStart || "00:00");
+  const [endTime, setEndTime] = useState(timeEnd || "00:00");
 
   // التعامل مع تغير وقت البدء
   const onStartTimeChange = (value) => {

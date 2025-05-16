@@ -35,12 +35,13 @@ const ReportTable = ({
   handleDeleteOutOfHoursWork,
   id,
 }) => {
+
   const [clickedTask, setClickedTask] = useState(null);
   const [isUpdateTaskModalOpen, setIsUpdateTaskModalOpen] = useState(false);
 
   const handleClickEdit = (taskId) => {
     setClickedTask(taskId);
-     setIsUpdateTaskModalOpen(true); 
+    setIsUpdateTaskModalOpen(true);
   };
 
   const handleCloseUpdateTaskModal = () => {
@@ -109,7 +110,10 @@ const ReportTable = ({
             <tbody>
               {task && task.length > 0 ? (
                 task.map((taskItem, index) => (
-                  <tr key={index} className="grid grid-cols-10">
+                  <tr
+                    key={index}
+                    className="grid grid-cols-10"
+                  >
                     <td className="border border-black p-1 text-xs text-center break-words min-h-10 flex items-center justify-center">
                       {index + 1}
                     </td>
@@ -354,6 +358,7 @@ const ReportTable = ({
         <UpdateTasksModal
           onClose={handleCloseUpdateTaskModal}
           id={clickedTask}
+          reportId={id}
         />
       )}
       {isSuggestionsModalOpen && (

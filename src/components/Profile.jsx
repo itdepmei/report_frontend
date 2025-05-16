@@ -55,7 +55,7 @@ const Profile = () => {
 
                 <button className="mt-4 w-full bg-gray-800 hover:bg-gray-900 text-white px-4 py-2 rounded-md flex items-center justify-center gap-2 transition-all">
                   <FaEdit size={14} />
-                  <span>تعديل الملف</span>
+                  <span onClick={() => navigate("/changePassword")}>تعديل كلمة المرور</span>
                 </button>
 
                 <button

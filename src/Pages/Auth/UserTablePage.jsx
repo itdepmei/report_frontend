@@ -4,8 +4,38 @@ import AllUserHook from "../../hook/auth/all-user-hook";
 import Register from "./Register";
 import Loader from "../../components/Utils/Loader";
 import Sidebar from "../../components/Utils/Sidebar";
+import { useDispatch } from "react-redux";
+import { deleteUser } from "../../redux/authSlice";
+import notify from "../../hook/useNotification";
+import DeleteModal from "../../components/modal/DeleteModal";
+import { Toaster } from "react-hot-toast";
 
 export default function UserTablePage() {
+  const dispatch = useDispatch();
+
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState(null);
+
+  const handleDeleteClick = (id) => {
+    setSelectedUserId(id);
+    setDeleteModalOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (selectedUserId) {
+      await dispatch(deleteUser(selectedUserId));
+      setDeleteModalOpen(false);
+      setSelectedUserId(null);
+    }
+
+    notify("تم حذف المستخدم", "success");
+  };
+
+  const handleCancelDelete = () => {
+    setDeleteModalOpen(false);
+    setSelectedUserId(null);
+  };
+
   const [allUsers, isLoading] = AllUserHook();
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
 
@@ -19,12 +49,6 @@ export default function UserTablePage() {
 
   const handleEditUser = (user) => {
     alert(`تعديل بيانات المستخدم: ${user.name}`);
-  };
-
-  const handleDeleteUser = (user) => {
-    if (window.confirm(`هل أنت متأكد من حذف المستخدم: ${user.name}؟`)) {
-      alert("تم حذف المستخدم (محاكاة فقط)");
-    }
   };
 
   return (
@@ -121,7 +145,7 @@ export default function UserTablePage() {
                             <Edit2 size={16} />
                           </button>
                           <button
-                            onClick={() => handleDeleteUser(user)}
+                            onClick={() => handleDeleteClick(user._id)}
                             className="text-red-600 hover:text-red-900 p-1 rounded hover:bg-red-100"
                           >
                             <Trash2 size={16} />
@@ -143,9 +167,17 @@ export default function UserTablePage() {
               </tbody>
             </table>
           </div>
+          <Toaster />
         </div>
         {isRegisterOpen && (
           <Register open={isRegisterOpen} close={handleClos} />
+        )}
+
+        {isDeleteModalOpen && (
+          <DeleteModal
+            onCancel={handleCancelDelete}
+            onConfirm={handleDeleteConfirm}
+          />
         )}
       </div>
     </div>

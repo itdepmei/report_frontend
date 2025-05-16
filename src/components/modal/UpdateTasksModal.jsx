@@ -7,7 +7,7 @@ import "react-time-picker/dist/TimePicker.css";
 import "react-clock/dist/Clock.css";
 import UpdateTaskHook from "../../hook/update-task-hook";
 
-const UpdateTasksModal = ({ onClose, id }) => {
+const UpdateTasksModal = ({ onClose, id, reportId }) => {
   const [
     newTaskTitle,
     newTimeStart,
@@ -18,7 +18,7 @@ const UpdateTasksModal = ({ onClose, id }) => {
     handleTimeEndUpdate,
     handleNoteUpdate,
     handleUpdateTask,
-  ] = UpdateTaskHook(id);
+  ] = UpdateTaskHook(id, reportId);
 
 
   // استخدام حالة محلية للتعامل مع قيم مكتبة TimePicker
