@@ -5,9 +5,13 @@ import GetAllReportsHook from "../hook/get-all-reports-hook";
 import Loader from "../components/Utils/Loader";
 import AddReportButton from "../components/AddReportButton";
 import Sidebar from "../components/Utils/Sidebar";
-import DeleteModal from "../components/modal/DeleteModal"; // استدعاء المودال هنا
+import DeleteModal from "../components/modal/DeleteModal"; 
 import { useDispatch } from "react-redux";
-import { deleteReport, sendReportToAssistant } from "../redux/reportsSlice";
+import {
+  deleteReport,
+  getAllReports,
+  sendReportToAssistant,
+} from "../redux/reportsSlice";
 import notify from "../hook/useNotification";
 
 const AllReportPage = () => {
@@ -33,8 +37,9 @@ const AllReportPage = () => {
     notify("تم حذف التقرير", "success");
   };
 
-  const handleSendClick = (id) => {
-    dispatch(sendReportToAssistant(id));
+  const handleSendClick = async (id) => {
+    await dispatch(sendReportToAssistant(id));
+    await dispatch(getAllReports());
     notify("تم ارسال التقرير", "success");
   };
 
