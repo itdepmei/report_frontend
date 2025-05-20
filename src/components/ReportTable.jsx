@@ -4,7 +4,7 @@ import urLogo from "../assets/urlogo.png";
 import formatDate from "../hook/UtilsFunctions/FormatDate";
 import { Pencil, Trash2, Plus } from "lucide-react";
 import TasksModal from "./modal/TasksModal";
-import SuggestionsModal from "./modal/suggestionsModal";
+import SuggestionsModal from "./modal/SuggestionsModal";
 import ComplaintModal from "./modal/ComplaintModal";
 import ObstacleModal from "./modal/ObstacleModal";
 import OutOfHoursWorkModal from "./modal/OutOfHoursWorkModal";
