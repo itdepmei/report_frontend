@@ -45,7 +45,6 @@ const ChangePasswordHook = () => {
   const res = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.auth);
 
-  console.log(res);
 
   useEffect(() => {
     if (!loading && loginClicked) {
